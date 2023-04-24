@@ -1,0 +1,11 @@
+.genres-card{
+  background-color: #fbf2e6;
+  padding-top: 30px;
+}
+.genres-container-img{
+  z-index: 1;
+}
+.genres-card-img{
+  cursor: pointer;
+  transition: all .4s ease-in-out;
+}

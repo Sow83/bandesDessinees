@@ -1,0 +1,16 @@
+.btn{
+  background-color: #c35941;
+  color: white;
+  transition: all .5s ease-in-out;
+}
+.btn:hover{
+  background-color: #d78371;
+  color: white;
+}
+.btn-outline{
+  background-color: transparent;
+  border-color: rgb(232, 224, 215);
+  color: #c35941;
+  width: 130px;
+  height: 44px;
+}

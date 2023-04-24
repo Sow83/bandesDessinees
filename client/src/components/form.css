@@ -1,0 +1,37 @@
+.MyForm-container{
+  background-color:#fbf2e6;
+}
+.MyForm-title{
+  background: #f5dec1;
+}
+.MyForm-subtitle{
+  color: #c35941;
+}
+.MyForm-subtitle:hover{
+  color: #c44528;
+}
+.MyForm{
+  background-color:white;
+}
+.MyForm-input{
+  width: 100%;
+  border: 1px solid rgb(224, 223, 223);
+  background-color: #faf7f6;
+}
+.MyForm-select{
+  border: 1px solid rgb(224, 223, 223);
+  background: #faf7f6;
+  width: 100%;
+  appearance: auto;
+}
+
+/* Formulaire d'inscription */
+@media screen and (min-width: 1200px){
+  .SignUp-form-mdp-ul{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .SignUp-form-mdp-li{
+    width: 50%;
+  }
+}

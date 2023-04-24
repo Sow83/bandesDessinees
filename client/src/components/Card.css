@@ -1,0 +1,26 @@
+.card-container{
+  background-color: #fbf2e6;
+}
+.card-container-img{
+  z-index: 1;
+}
+.card-container-img::after{
+  content: "";
+  background-image: url("http://localhost:8000/images/dotted.png");
+  position: absolute;
+  z-index: -1;
+  top: 71px;
+  left: -22px;
+  width: 231px;
+  height: 156px;
+}
+.card-img{
+  cursor: pointer;
+  transition: all .4s ease-in-out;
+}
+.card-img:hover{
+  transform: scale(1.1);
+}
+.card-star{
+  filter: invert(92%) sepia(12%) saturate(5024%) hue-rotate(340deg) brightness(102%) contrast(99%);
+}

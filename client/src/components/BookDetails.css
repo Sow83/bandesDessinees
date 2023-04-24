@@ -1,0 +1,30 @@
+.bookDetails{
+  background-color: #fbf2e6;
+  padding: 11rem 0;
+}
+.bookDetails-price{
+  color: #c35941;
+}
+.btn.bookDetails-btn{
+  background-color: #d3ab7d;
+}
+.btn.bookDetails-btn:hover{
+  background-color: #dbb78d;
+}
+
+.booksdetails-underline{
+  border-bottom: 2px solid #efdcc7;
+  padding-bottom: 1px;
+  width: 366px;
+  position: relative;
+}
+.booksdetails-underline:after{
+  content: "";
+  background-color: #d3ab7d; 
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 40px; 
+  height: 6px; 
+}
+

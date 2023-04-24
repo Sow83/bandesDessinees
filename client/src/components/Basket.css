@@ -1,0 +1,34 @@
+
+.basket{
+  background-color: #fbf2e6;
+  padding: 185px 0;
+}
+.basket-table{
+  background-color: white;
+}
+.basket .basket-thead{
+  background-color: #f5dec1;
+  height: 57px;
+  vertical-align: middle;
+}
+.basket-button-delete{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  filter: invert(44%) sepia(24%) saturate(1388%) hue-rotate(324deg) brightness(91%) contrast(92%);
+}
+.basket-img-bd{
+  background-color: #fbf2e6;
+  width: 100px;
+}
+.basket-order-price{
+  background-color: white;
+  padding-bottom: 200px;
+}
+.basket-total{
+  color: #c35941;
+}
+.basket-empty-cart{
+  min-height: 45vh;
+}
+
