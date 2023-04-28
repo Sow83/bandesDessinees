@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
 import './Genres.css'
 import './Card.css'
 import ShowBooks from './ShowBooks';
 
 
-const Genres = ({AddtoCart}) => {
+const Genres = ({AddItemToCart}) => {
   const [books, setBooks] = useState([]);
   let { id } = useParams();
   
@@ -34,16 +34,20 @@ const Genres = ({AddtoCart}) => {
   }, [id]);
  
 
-  // const path = window.location.pathname
-  // const title =  path.split('/')[2]
-  let { state } = useLocation();
-  const title = state.titleForGenres
+  const path = window.location.pathname
+  const title =  path.split('/')[2]
+  // let { state } = useLocation();
+  // console.log(state)
+  // let title
+  // if (state) {
+  //   title = state.titleForGenres 
+  // }
   // console.log(title)
   return (
     <section>
       <Link to={'/'} className="container d-block mt-3 text-decoration-none text-dark fs-5 fw-semibold fst-italic">Retour</Link>  
       <h2 className='text-center pt-5'>{title}</h2>
-      <ShowBooks books={books} AddtoCart={AddtoCart}/>
+      <ShowBooks books={books} AddItemToCart={AddItemToCart}/>
     </section>
   );
 }

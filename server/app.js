@@ -113,7 +113,7 @@ mysql.createConnection(config)
         }
         if (results.length > 0) {
           const user = results[0];
-          console.log(user)
+          // console.log(user)
           const match = await bcrypt.compare(password, user.password)
           if (match) {
             // Generate token
@@ -151,6 +151,67 @@ app.get('/api/protected', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Une erreur est survenue' })
   }
 });
+
+// Middleware de validation de données pour valider les données de la commande(orders) avant de les insérer dans la base de données
+function validateOrderDataMiddleware(req, res, next) {
+  const {totalWithoutShipping, shippingCost, orderTotal, id_users, articles } = req.body;
+
+  // Vérifie que toutes les données sont présentes
+  if (!totalWithoutShipping || !shippingCost || !orderTotal || !id_users || !articles) {
+    return res.status(400).send({ message: "Toutes les données de commande sont requises." });
+  }
+
+  // Vérifie le type de données
+  if (typeof totalWithoutShipping !== "number" || typeof shippingCost !== "number" || typeof orderTotal !== "number" || typeof id_users !== "number" || !Array.isArray(articles)) {
+    return res.status(400).send({ message: "Les types de données de la commande sont incorrects." });
+  }
+
+  // Vérifie les valeurs des données
+  if (totalWithoutShipping < 0 || shippingCost < 0 || orderTotal < 0 || id_users < 0 || articles.some(article => article.reference < 0 || article.title < 0 || article.price < 0 || article.quantity < 0 ||  article.totalLine < 0 || article.bookId < 0)) {
+    return res.status(400).send({ message: "Les valeurs des données de la commande sont invalides." });
+  }
+
+  next();
+}
+
+app.post('/orders', authMiddleware, validateOrderDataMiddleware, async (req, res) => {
+  const {totalWithoutShipping, shippingCost, orderTotal, id_users, articles } = req.body;
+
+  try {
+    await connection.beginTransaction();
+
+    // Insertion de la nouvelle commande dans la table `orders`
+    const orderPromise = await connection.query(
+      'INSERT INTO orders (totalWithoutShipping, shippingCost, orderTotal, id_users) VALUES (?, ?, ?, ?)',
+      [totalWithoutShipping, shippingCost, orderTotal, id_users]
+    );
+    const orderId = orderPromise.insertId;
+    
+    // Insertion des détails de chaque article commandé dans la table `order-line`
+    const orderLinePromises = articles.map((article) => {
+      return connection.query(
+        'INSERT INTO `order-line` (reference, title, price, quantity, totalLine, id_orders, id_books) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [article.reference, article.title, article.price, article.quantity, article.totalLine, orderId, article.bookId]
+      );
+    });    
+
+    // Attendre que toutes les requêtes d'insertion soient terminées
+    await Promise.all([orderPromise, ...orderLinePromises]);
+
+    await connection.commit();
+
+    res.status(201).send({ message: "Votre commande a été effectuée avec succès." });
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  }
+});
+
+
+
+
+
+
 
 // app.use(function(err, req, res, next) {
 //   if (err.status === 401) {

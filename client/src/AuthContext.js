@@ -5,6 +5,7 @@ import axios from 'axios'
 export const AuthContext = createContext("")
 
 export const AuthProvider = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLogouted, setIsLogouted] = useState(false);
   const [user, setUser] = useState(null)
@@ -41,7 +42,11 @@ export const AuthProvider = ({ children }) => {
 
   // Vérifie s'il ya connexion lorsqu'une page se recharge
   useEffect(() => {
-    login();
+    const verifyAuth = async () => {
+      await login();
+      setIsLoading(false);
+    }
+    verifyAuth();
   }, []);
 
   // Redirrige l'utilisateur à la page d'accueil après l'appel de la fonction "logout" cad après la déconnexion
@@ -51,16 +56,19 @@ export const AuthProvider = ({ children }) => {
       setIsLogouted(false)
     }
   }, [isLogouted])
+
+  // Attends que l'authentification soit vérifiée avant de renvoyer les enfants
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return ( 
     /*L'enfant direct de ce Provider est {children}, qui représente tous les composants
      qui sont imbriqués directement dans le Provider(le fournisseur de contexte). 
      Ces composants ont maintenant 
      accès aux valeurs de contexte fournies par le Provider.  */ 
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
 }
-
-
-

@@ -1,21 +1,90 @@
 
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState, useContext, useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
+import  { AuthContext } from '../AuthContext'
 import "./form.css"
 
-const Payment = () => {
-  const [showAlert, setShowAlert] = useState(false)
-  const location = useLocation()
 
+const PaymentHeader = () => {
+  return (
+    <header>
+        <nav className="navbar navbar-expand-lg py-5 justify-content-center" style={{padding: "0 0.75rem"}}>
+        <div className="header-logo-navbar">
+          <Link to={'/'} className="navbar-brand fw-bold">BandesDessinées</Link>
+        </div>
+      </nav>
+    </header>
+  );
+}
+
+const Payment = ({cartItems, itemsPrice, shippingPrice, totalPrice}) => {
+  console.log(cartItems)
+  // console.log(itemsPrice)
+  // console.log(shippingPrice)
+  // console.log(totalPrice)
+
+  // const [showAlert, setShowAlert] = useState("")
+  const { isAuthenticated, user } = useContext(AuthContext)
+  let userId
+  if (user) {
+     userId = user[0].id   
+  }
+  const navigate = useNavigate()
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
+  // console.log(errors)
   const onSubmit = data =>{
-    setShowAlert(true)
-    reset()
-    console.log(data)
-
+    fetchData()
+    // console.log(data)
   };
-  console.log(errors)
+
+  const token = localStorage.getItem("token")
+  const fetchData = async () =>{
+    const options = {
+      url: "http://localhost:8000/orders",
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Authorization: `Bearer ${token}`
+      },
+      data: {
+        "totalWithoutShipping": itemsPrice,
+        "shippingCost": shippingPrice,
+        "orderTotal": totalPrice,
+        "id_users": userId,
+        //les lignes de commande du panier (cad chaque article) sont dans un tableau (articles)
+        "articles" : cartItems.map((item) => {
+            return {
+              "reference": item.reference,
+              "title": item.title,
+              "price": item.price,
+              "quantity": item.quantity,
+              "totalLine": item.quantity*item.price,
+              "bookId": item.id
+            }
+          })
+        
+      }
+    }
+    try {
+      const response = await axios(options) 
+        // setShowAlert(response.data.message)
+        reset() 
+        navigate('/MyAccounts', {state: {alert: response.data.message}})     
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // if (!user) {
+  //   return <Navigate to="/signIn" />
+  // }
+  useEffect(() => {
+    // Si l'utilisateur n'est pas authentifié, redirige-le vers la page de connexion
+    if (!isAuthenticated) {
+      window.location.href = "/signIn";
+    }
+  }, [isAuthenticated]);
 
   const currentYear = new Date().getFullYear()
   /**
@@ -36,19 +105,21 @@ const Payment = () => {
     return true
   }
 
-  let totalCommande
-  if (location.state) {
-    totalCommande = location.state.totalCommande   
-  }
-  // console.log(totalCommande)
+  // let totalCommande
+  // if (location.state) {
+  //   totalCommande = location.state.totalCommande   
+  // }
+// const test = "taftaf"
   return (
+    <>
+    <PaymentHeader />
     <div className='MyForm-container py-5'>
       <div className='container fw-semibold'>
         <div className='MyForm-title mb-0 py-3 text-center row'>
           <h1>Paiement</h1>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className='MyForm py-5 px-md-5 row'>
-        <p className='fs-5'>Total commande: <span className='text-danger'>{totalCommande && totalCommande} &#8364;</span></p>
+        <p className='fs-5'>Total commande: <span className='text-danger'>{totalPrice && totalPrice} &#8364;</span></p>
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="nom">Nom sur la carte*</label>
             <input className='MyForm-input py-3 mb-4' id='nom' type="text" maxLength={30} placeholder='Isabelle' {...register("Nom", { required: true, maxLength: 30 })} />
@@ -92,25 +163,25 @@ const Payment = () => {
             {errors.cvv?.type === 'maxLength' && <p role="alert" className='text-danger' style={{ marginTop: "-22px" }}>Ce champ doit avoir maximum 3 caractères</p>}
             {errors.cvv?.type === 'pattern' && <p role="alert" className='text-danger' style={{ marginTop: "-22px" }}>Ce champ doit avoir que 3 chiffres</p>}
           </div>
-
           <div>
             <input className='d-block btn btn-outline fw-semibold mb-4' type="submit" value="Envoyer" />
-          </div>
-          {showAlert &&
-          <div className='col-sm-6'>
-            <div className="alert alert-success alert-dismissible fade show text-center" role="alert">
-              <strong className='d-block'>Merci d'être venu jusqu'ici</strong> Votre paiement a été effectué.
-              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          </div>
-          }
+          </div>        
         </form>
       </div>
     </div>
-
+    </>
   )
 }
 
 export default Payment
 
 
+// {showAlert !== "" &&
+// <div className='col-sm-6'>
+//   <div className="alert alert-success alert-dismissible fade show text-center" role="alert">
+//     {/* <span className='d-block fw-bold'>Merci d'être venu jusqu'ici</span> Votre paiement a été effectué. */}
+//     <p>{showAlert}</p>
+//     <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+//   </div>
+// </div>
+// }

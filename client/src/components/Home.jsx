@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import './Card.css';
 import ShowBooks from './ShowBooks';
 
-const Home = ({AddtoCart}) => {
+const Home = ({AddItemToCart}) => {
   const [books, setBooks] = useState ([]);
   const [genres, setGenres] = useState ([]);
 
@@ -44,7 +44,7 @@ const Home = ({AddtoCart}) => {
             return (
               <Link
                 to={`/genres/${genre.genresName}/${genre.id}`}
-                state={{titleForGenres: `${genre.genresName}`}}
+                // state={{titleForGenres: `${genre.genresName}`}}
                 key={genre.id}
                 className="text-decoration-none link-dark"
               >
@@ -81,7 +81,7 @@ const Home = ({AddtoCart}) => {
             <option value="5">Prix décroissant</option>
           </select>
         </form>
-        <ShowBooks books={books} home={true} AddtoCart={AddtoCart} />
+        <ShowBooks books={books} home={true} AddItemToCart={AddItemToCart} />
       </div>
     </div>
   );

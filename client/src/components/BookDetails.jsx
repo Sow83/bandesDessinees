@@ -5,7 +5,7 @@ import './BookDetails.css'
 import moment from 'moment'
 import 'moment/locale/fr'; // Importe le localisateur français de Moment.js
 
-const BookDetails = ({AddtoCart}) => {
+const BookDetails = ({AddItemToCart}) => {
   const { id } = useParams()
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ const BookDetails = ({AddtoCart}) => {
                 <option value="7">7</option>
                 <option value="10">10</option>
             </select>
-              <button type='button' className='btn me-4 fw-semibold' onClick={() => AddtoCart(details)}>Ajouter</button>
+              <button type='button' className='btn me-4 fw-semibold' onClick={() => AddItemToCart(details)}>Ajouter</button>
               <button type='button' className='btn bookDetails-btn fw-semibold'>Acheter</button>
             </div>
             <p><span className='fw-semibold'>Auteur: </span>{details.authorsName}</p>

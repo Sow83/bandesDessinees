@@ -1,20 +1,21 @@
 
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { useState } from 'react'
 import "./form.css"
 
 const SignUp = () => {
-  const [errorDuplicateEmail, setErrorDuplicateEmail] = useState('');
-  const [errorServer, setErrorServer] = useState('');
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [errorDuplicateEmail, setErrorDuplicateEmail] = useState('')
+  const [errorServer, setErrorServer] = useState('')
+  const navigate = useNavigate()
+  const { register, handleSubmit, formState: { errors } } = useForm()
   // const onSubmit = data => console.log(data);
   // console.log(errors);
 
   const onSubmit = (dataForm) => {
-    console.log(dataForm) 
-    fetchData(dataForm)
+    // dataForm est l'ensemble des données saisies par l'utilisateur 
+    fetchData(dataForm);
   }
  
   const fetchData = async (dataForm) =>{
@@ -28,9 +29,11 @@ const SignUp = () => {
       data: dataForm  
     };   
     try {
-    const response =  await axios(options)
-    console.log(response.status);
-      // window.location = "http://localhost:3000/signIn";
+      const response =  await axios(options)
+      console.log(response.status);
+      if (response.status === 200) {
+        navigate('/signIn')  
+      }
     } catch (error) {
         // console.error(error.response.data.message);
         console.log(error.response.status)
@@ -42,7 +45,7 @@ const SignUp = () => {
         }
     }  
   }
-
+ 
   return (
     <div className='MyForm-container py-5'>
       <div className='container fw-semibold'>
@@ -72,6 +75,7 @@ const SignUp = () => {
             <label className='d-block' htmlFor="prenom">Prénom*</label>
             <input className='MyForm-input py-3 mb-4' id='prenom' type="text" {...register("firstName", { required: true, maxLength: 20 })} />
             {errors.firstName?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
+            {errors.firstName?.type === 'maxLength' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ doit avoir maximum 20 caractères</p>}
           </div>
 
           <div className='col-sm-6'>
@@ -102,6 +106,7 @@ const SignUp = () => {
             <input className='MyForm-input py-3 mb-4' id='telephone' type="tel" {...register("phone", { required: true, maxLength: 12, pattern: /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/i })} />
             {errors.phone?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
             {errors.phone?.type === 'pattern' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Numéro de téléphone invalide</p>}
+            {errors.phone?.type === 'maxLength' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Le numéro de télophone ne doit pas avoir plus de 12 caractères</p>}
           </div>
 
           <div className='col-sm-6'>

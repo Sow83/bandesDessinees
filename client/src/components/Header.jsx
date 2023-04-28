@@ -90,8 +90,11 @@ const Header = ({numberOfCartItems}) => {
                     {showMenu &&
                       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                         <div className='header-menu-profile p-4 text-center'>
-                            <Link to={'/profile'} className="text-decoration-none header-menu fw-semibold mb-4 d-block">Profil et commandes</Link>
-                            <Link className="fw-semibold btn mb-3" onClick={handleLogout}>Se déconnecter</Link>    
+                            <Link to={'/myAccounts'} className="text-decoration-none header-menu fw-semibold mb-4 d-block">Mon compte</Link>
+                            <hr className='' />
+                            <Link to={'/myAccounts'} className="text-decoration-none header-menu fw-semibold mb-4 d-block">Mes commandes</Link>
+                            <hr className='mb-4' />
+                            <Link className="fw-semibold btn" onClick={handleLogout}>Se déconnecter</Link>    
                         </div>      
                       </div>
                     }
