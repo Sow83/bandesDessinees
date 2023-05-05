@@ -11,6 +11,7 @@ import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
 import Payment from './components/Payment'
 import MyAccounts from './components/MyAccounts'
+import UserAccountInformation from './components/userAccountInformation'
 import { AuthProvider } from './AuthContext'
 import './components/Btn.css'
 import './components/reset.css'
@@ -83,8 +84,9 @@ function App() {
                 <Route path='/basket' element={<Basket cartItems={cartItems} setCartItems={setCartItems} AddItemToCart={AddItemToCart} decrementCartItem={decrementCartItem} deleteItemFromCart={deleteItemFromCart} itemsPrice={itemsPrice} shippingPrice={shippingPrice} totalPrice={totalPrice} />} />
                 <Route path='/signUp' element={<SignUp />}/>   
                 <Route path='/signIn' element={<SignIn cartItems={cartItems} />}/>  
-                <Route path='/payment' element={<Payment cartItems={cartItems} totalPrice={totalPrice} itemsPrice={itemsPrice} shippingPrice={shippingPrice} />}/>   
-                <Route path='/myAccounts' element={<MyAccounts />}/>   
+                <Route path='/payment' element={<Payment cartItems={cartItems} setCartItems={setCartItems} setNumberOfCartItems={setNumberOfCartItems} totalPrice={totalPrice} itemsPrice={itemsPrice} shippingPrice={shippingPrice} />}/>   
+                <Route path='/myAccounts' element={<MyAccounts />}/> 
+                <Route path='/userAccountInformation' element={<UserAccountInformation />} />
             </Routes>
             </MainLayout>
             <Footer />  

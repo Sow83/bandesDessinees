@@ -1,0 +1,33 @@
+
+.myAccounts{
+  background-color: #fbf2e6;
+  padding: 9px 0;
+}
+.myAccounts-table{
+  background-color: white;
+}
+.myAccounts .myAccounts-thead{
+  background-color: #f5dec1;
+  height: 57px;
+  vertical-align: middle;
+}
+/* .myAccounts-button-delete{
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  filter: invert(44%) sepia(24%) saturate(1388%) hue-rotate(324deg) brightness(91%) contrast(92%);
+} */
+.myAccounts-img-bd{
+  background-color: #fbf2e6;
+  width: 100px;
+}
+.myAccounts-order-price{
+  background-color: white;
+}
+.myAccounts-total{
+  color: #c35941;
+}
+.myAccounts-empty-cart{
+  min-height: 45vh;
+}
+

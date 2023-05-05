@@ -1,5 +1,5 @@
 
-import { useState, useContext, useEffect} from 'react'
+import { useContext, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
@@ -19,28 +19,55 @@ const PaymentHeader = () => {
   );
 }
 
-const Payment = ({cartItems, itemsPrice, shippingPrice, totalPrice}) => {
-  console.log(cartItems)
+const Payment = ({cartItems, setCartItems, setNumberOfCartItems, itemsPrice, shippingPrice, totalPrice}) => {
+  // console.log(cartItems)
   // console.log(itemsPrice)
   // console.log(shippingPrice)
   // console.log(totalPrice)
+const { register, handleSubmit, reset, formState: { errors } } = useForm()
+const navigate = useNavigate()
+// console.log(errors)
 
-  // const [showAlert, setShowAlert] = useState("")
+// Rediriger l'utilisateur vers la page d'accueil (navigate("/")) lorsqu'il essaie de 
+// revenir à la page de paiement avec le bouton "Précédent" ou "Suivant" du navigateur, cela s'applique toute l'application 
+// window.onpopstate = () => {
+//   navigate("/");
+// }
+
   const { isAuthenticated, user } = useContext(AuthContext)
   let userId
+  let userName
   if (user) {
      userId = user[0].id   
+     userName = user[0].lastName
   }
-  const navigate = useNavigate()
-  const { register, handleSubmit, reset, formState: { errors } } = useForm()
-  // console.log(errors)
+
+  // La date de commande et le nom de l'utilisatur seront le numéro de commande sous la forme(Sow03052023-173901)
+  // Les mois, jours, heures, minutes et secondes sont convertis en chaînes et remplis avec des zéros à gauche
+  // si nécessaire pour s'assurer qu'ils ont deux chiffres(padStart).
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const formattedDate = `${userName}-${day}${month}${year}-${hours}${minutes}${seconds}`;
+  console.log(formattedDate);
+  
   const onSubmit = data =>{
     fetchData()
+    localStorage.removeItem('cartItems')
+    localStorage.removeItem('numberOfCartItems')
+    setNumberOfCartItems("")
+    setCartItems([])
     // console.log(data)
   };
 
   const token = localStorage.getItem("token")
   const fetchData = async () =>{
+  
+  
     const options = {
       url: "http://localhost:8000/orders",
       method: "POST",
@@ -52,19 +79,10 @@ const Payment = ({cartItems, itemsPrice, shippingPrice, totalPrice}) => {
         "totalWithoutShipping": itemsPrice,
         "shippingCost": shippingPrice,
         "orderTotal": totalPrice,
+        "orderNumber": formattedDate,
         "id_users": userId,
         //les lignes de commande du panier (cad chaque article) sont dans un tableau (articles)
-        "articles" : cartItems.map((item) => {
-            return {
-              "reference": item.reference,
-              "title": item.title,
-              "price": item.price,
-              "quantity": item.quantity,
-              "totalLine": item.quantity*item.price,
-              "bookId": item.id
-            }
-          })
-        
+        "articles" : cartItems       
       }
     }
     try {
@@ -76,15 +94,13 @@ const Payment = ({cartItems, itemsPrice, shippingPrice, totalPrice}) => {
       console.log(error)
     }
   }
-  // if (!user) {
-  //   return <Navigate to="/signIn" />
-  // }
+ 
   useEffect(() => {
     // Si l'utilisateur n'est pas authentifié, redirige-le vers la page de connexion
-    if (!isAuthenticated) {
-      window.location.href = "/signIn";
+    if (isAuthenticated === false) {
+      navigate("/signIn")
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const currentYear = new Date().getFullYear()
   /**
@@ -176,12 +192,3 @@ const Payment = ({cartItems, itemsPrice, shippingPrice, totalPrice}) => {
 export default Payment
 
 
-// {showAlert !== "" &&
-// <div className='col-sm-6'>
-//   <div className="alert alert-success alert-dismissible fade show text-center" role="alert">
-//     {/* <span className='d-block fw-bold'>Merci d'être venu jusqu'ici</span> Votre paiement a été effectué. */}
-//     <p>{showAlert}</p>
-//     <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-//   </div>
-// </div>
-// }

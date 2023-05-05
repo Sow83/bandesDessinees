@@ -66,9 +66,9 @@ const SignUp = () => {
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="nom">Nom*</label>
-            <input className='MyForm-input py-3 mb-4' id='nom' type="text" maxLength={30} {...register("surname", { required: true, maxLength: 30 })} />
-            {errors.surname?.type === 'required' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
-            {errors.surname?.type === 'maxLength' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ doit avoir maximum 30 caractères</p>}
+            <input className='MyForm-input py-3 mb-4' id='nom' type="text" maxLength={30} {...register("lastName", { required: true, maxLength: 30 })} />
+            {errors.lastName?.type === 'required' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
+            {errors.lastName?.type === 'maxLength' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ doit avoir maximum 30 caractères</p>}
           </div>
 
           <div className='col-sm-6'>

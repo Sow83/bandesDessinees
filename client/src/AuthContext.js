@@ -17,7 +17,10 @@ export const AuthProvider = ({ children }) => {
   const login = async () => {
     const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : ''
 
-    try {
+   try {
+    // Sans cette condition, si le token est null, undefined ou une chaîne de caractères vide,
+    // la requête vers le serveur serait effectuée sans un token valide
+    if (token !== '') {
       const response = await axios.get("http://localhost:8000/api/protected", {
         headers: {
           Authorization: `Bearer ${token}`
@@ -28,9 +31,10 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true)
         setUser(response.data.user)
       } 
-    } catch (error) {
-      console.log(error)
     }
+  } catch (error) {
+    console.log(error)
+  }
   }
 
   const logout = () => {
@@ -40,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     setIsLogouted(true)
   }
 
-  // Vérifie s'il ya connexion lorsqu'une page se recharge
+  // Vérifie s'il ya connexion lorsqu'une page se recharge et attend le resultat de login
   useEffect(() => {
     const verifyAuth = async () => {
       await login();
@@ -50,6 +54,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Redirrige l'utilisateur à la page d'accueil après l'appel de la fonction "logout" cad après la déconnexion
+  // et réinitialise  isLogouted à false
   useEffect(() => {
     if (isLogouted) {
       navigateRef.current('/')
@@ -59,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
   // Attends que l'authentification soit vérifiée avant de renvoyer les enfants
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <p className='container text-center fs-4 mt-5'>Chargement...</p>;
   }
 
   return ( 

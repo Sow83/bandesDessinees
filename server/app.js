@@ -83,7 +83,7 @@ mysql.createConnection(config)
   // })
   app.post('/signUp', async(req, res) => {   
     try {
-      const { sexe, surname, firstName, email, phone,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry } = req.body  
+      const { sexe, firstName, lastName,  email, phone,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry } = req.body  
       let {	password } = req.body
       const existingUser = await connection.query('SELECT * FROM users WHERE email = ?', [email])
       if (existingUser.length > 0) {
@@ -92,7 +92,7 @@ mysql.createConnection(config)
       const saltRounds = 10
       const hashedPassword =  await bcrypt.hash(password, saltRounds)
       password = hashedPassword
-      const rows = await connection.query('INSERT INTO users (sexe, surname, firstName, email, phone,	password,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry) VALUES (?,?,?,?,?,?,?,?,?,?,?)', [sexe, surname, firstName, email, phone,	password,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry]) 
+      const rows = await connection.query('INSERT INTO users (sexe, firstName, lastName,  email, phone,	password,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry) VALUES (?,?,?,?,?,?,?,?,?,?,?)', [sexe, firstName, lastName, email, phone,	password,	dateOfBirth, streetNumberAndName, addressPostalCode,	addressCity, addressCountry]) 
       res.status(200).send(rows)
     } catch (error) {
       console.error(error)
@@ -138,7 +138,8 @@ mysql.createConnection(config)
     } 
   });
   
-  // Middleware d'authentification pour protéger une route
+  // Middleware d'authentification pour le context (react) d'authentification
+  // afin de vérifier à travers le context si l'utilisateur est authentifié ou non 
 app.get('/api/protected', authMiddleware, async (req, res) => {
   try {
     // Recupération de UserId via le middleware "authMiddleware"
@@ -157,41 +158,47 @@ function validateOrderDataMiddleware(req, res, next) {
   const {totalWithoutShipping, shippingCost, orderTotal, id_users, articles } = req.body;
 
   // Vérifie que toutes les données sont présentes
-  if (!totalWithoutShipping || !shippingCost || !orderTotal || !id_users || !articles) {
+  if (!totalWithoutShipping || !orderTotal || !id_users || !articles) {
     return res.status(400).send({ message: "Toutes les données de commande sont requises." });
   }
 
   // Vérifie le type de données
-  if (typeof totalWithoutShipping !== "number" || typeof shippingCost !== "number" || typeof orderTotal !== "number" || typeof id_users !== "number" || !Array.isArray(articles)) {
+  if (typeof totalWithoutShipping !== "number" || typeof orderTotal !== "number" || typeof id_users !== "number" || !Array.isArray(articles)) {
     return res.status(400).send({ message: "Les types de données de la commande sont incorrects." });
   }
 
   // Vérifie les valeurs des données
-  if (totalWithoutShipping < 0 || shippingCost < 0 || orderTotal < 0 || id_users < 0 || articles.some(article => article.reference < 0 || article.title < 0 || article.price < 0 || article.quantity < 0 ||  article.totalLine < 0 || article.bookId < 0)) {
+  if (totalWithoutShipping < 0 || orderTotal < 0 || id_users < 0 || articles.some(article => article.reference < 0 || article.title < 0 || article.price < 0 || article.quantity < 0 ||  article.totalLine < 0 || article.bookId < 0)) {
     return res.status(400).send({ message: "Les valeurs des données de la commande sont invalides." });
+  }
+
+  // Vérifie la valeur de shippingCost qui peut etre égal à zero 
+  if (shippingCost && typeof shippingCost !== "number") {
+    return res.status(400).send({ message: "Le type de données de shippingCost est incorrect." });
   }
 
   next();
 }
 
+
 app.post('/orders', authMiddleware, validateOrderDataMiddleware, async (req, res) => {
-  const {totalWithoutShipping, shippingCost, orderTotal, id_users, articles } = req.body;
+  const {totalWithoutShipping, shippingCost, orderTotal, orderNumber, id_users, articles } = req.body;
 
   try {
     await connection.beginTransaction();
 
     // Insertion de la nouvelle commande dans la table `orders`
     const orderPromise = await connection.query(
-      'INSERT INTO orders (totalWithoutShipping, shippingCost, orderTotal, id_users) VALUES (?, ?, ?, ?)',
-      [totalWithoutShipping, shippingCost, orderTotal, id_users]
+      'INSERT INTO orders (totalWithoutShipping, shippingCost, orderTotal, orderNumber, id_users) VALUES (?, ?, ?, ?, ?)',
+      [totalWithoutShipping, shippingCost, orderTotal, orderNumber, id_users]
     );
     const orderId = orderPromise.insertId;
     
-    // Insertion des détails de chaque article commandé dans la table `order-line`
+    // Insertion des détails de chaque article commandé dans la table `order_line`
     const orderLinePromises = articles.map((article) => {
       return connection.query(
-        'INSERT INTO `order-line` (reference, title, price, quantity, totalLine, id_orders, id_books) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [article.reference, article.title, article.price, article.quantity, article.totalLine, orderId, article.bookId]
+        'INSERT INTO `order_line` (reference, title, price, quantity, id_orders, id_books) VALUES (?, ?, ?, ?, ?, ?)',
+        [article.reference, article.title, article.price, article.quantity, orderId, article.id]
       );
     });    
 
@@ -200,15 +207,72 @@ app.post('/orders', authMiddleware, validateOrderDataMiddleware, async (req, res
 
     await connection.commit();
 
-    res.status(201).send({ message: "Votre commande a été effectuée avec succès." });
+    res.status(201).send({ message: "Votre paiement a été effectué avec succès." });
   } catch (error) {
     await connection.rollback();
     throw error;
   }
 });
 
+// Recupérer l'historique de commande(s) d'un utilisateur
+// Route pour afficher les commandes d'un utilisateur connecté
+app.get('/orders/history', authMiddleware, (req, res) => {
+  const userId = req.auth.userId;
+  const query = `
+    SELECT orders.id, orders.totalWithoutShipping, orders.shippingCost, orders.orderTotal, orders.orderDate, orders.orderNumber, order_line.reference, order_line.title, order_line.price, order_line.quantity, order_line.id_books
+    FROM orders
+    INNER JOIN order_line ON orders.id = order_line.id_orders
+    WHERE orders.id_users = ?
+    ORDER BY orders.orderDate DESC
+  `;
+
+  connection.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Erreur lors de la récupération des commandes de l\'utilisateur :', err);
+      res.status(500).json({ error: 'Une erreur est survenue' });
+      return;
+    }
+
+    const orders = {};
+
+    results.forEach((result) => {
+      if (!orders[result.id]) {
+        orders[result.id] = { 
+          totalWithoutShipping: result.totalWithoutShipping,
+          shippingCost: result.shippingCost,
+          orderTotal: result.orderTotal,
+          orderDate: result.orderDate,
+          orderNumber: result.orderNumber,
+          items: [] 
+        };
+      }
+
+      orders[result.id].items.push({
+        reference: result.reference,
+        title: result.title,
+        price: result.price,
+        quantity: result.quantity,
+        id_books: result.id_books,
+        totalLine: result.price * result.quantity
+      });
+
+    });
+
+    res.json({ orders });
+  });
+});
 
 
+// Recupérer les informations des utulisateurs pour pourvoir l'afficher dans leur compte
+app.get('/users', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.auth.userId
+    const result = await connection.query("SELECT * FROM users WHERE users.id = ?", [userId])
+    res.status(200).json({result})
+  } catch (error) {
+    res.status.jon({error:`Une erreur est survenue: ${error.message}`})
+  }
+})
 
 
 

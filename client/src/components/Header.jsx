@@ -85,7 +85,7 @@ const Header = ({numberOfCartItems}) => {
               <>
                 {isAuthenticated ? 
                   <div>
-                  {user && <p className='d-inline-block'>Bonjour {firstNameLoggedUser()}</p>}
+                  {user && <p className='d-inline-block fw-bold'>Bonjour {firstNameLoggedUser()}</p>}
                     <img className='header-profile me-5' src="http://localhost:8000/images/profile-connected.png" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} alt="profil" />              
                     {showMenu &&
                       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

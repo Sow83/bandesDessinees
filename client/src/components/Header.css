@@ -46,6 +46,7 @@
   }
   .header-logo-navbar{
     display: flex;
+    align-items: center;
   }
   /* .header-badge{
     left: 15px;
