@@ -11,7 +11,6 @@ import SignUp from './components/SignUp'
 import SignIn from './components/SignIn'
 import Payment from './components/Payment'
 import MyAccounts from './components/MyAccounts'
-import UserAccountInformation from './components/userAccountInformation'
 import { AuthProvider } from './AuthContext'
 import './components/Btn.css'
 import './components/reset.css'
@@ -27,9 +26,9 @@ function App() {
     const exist = cartItems.find((element) => element.id === product.id )  
     // Si on a le meme produit on incrémente la quantité
     if(exist) {
-      if(exist.quantity && exist.quantity === 15){
-        return
-      }
+      // if(exist.quantity && exist.quantity === 15){
+      //   return
+      // }
       setCartItems(cartItems.map((item) => item.id === product.id ? { ...exist, quantity: exist.quantity + 1 } : item))
     }
     // Si non la quantité reste à 1
@@ -86,7 +85,6 @@ function App() {
                 <Route path='/signIn' element={<SignIn cartItems={cartItems} />}/>  
                 <Route path='/payment' element={<Payment cartItems={cartItems} setCartItems={setCartItems} setNumberOfCartItems={setNumberOfCartItems} totalPrice={totalPrice} itemsPrice={itemsPrice} shippingPrice={shippingPrice} />}/>   
                 <Route path='/myAccounts' element={<MyAccounts />}/> 
-                <Route path='/userAccountInformation' element={<UserAccountInformation />} />
             </Routes>
             </MainLayout>
             <Footer />  

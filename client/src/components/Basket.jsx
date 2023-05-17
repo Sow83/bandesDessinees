@@ -78,7 +78,7 @@ const Basket = ({cartItems, AddItemToCart, decrementCartItem, deleteItemFromCart
                     <div className='d-flex justify-content-between align-items-center' style={{width: "130px"}}>
                       <button type='button' onClick={() => decrementCartItem(item)} className={"border-0"}  style={{width: "50px"}} disabled={item.quantity === 1 && "disabled"}>-</button>
                         <span className='px-1'>{item.quantity}</span>
-                      <button type='button' onClick={() => AddItemToCart(item)} className="border-0 " style={{width: "50px"}} disabled={item.quantity === 15 && "disabled"}>+</button>
+                      <button type='button' onClick={() => AddItemToCart(item)} className="border-0 " style={{width: "50px"}}>+</button>
                     </div>
                   </td>
                   <td>{item.quantity*item.price.toFixed(2) /* le prix sera de deux chiffre après la virgule*/}&euro;</td>

@@ -57,7 +57,7 @@ const SignUp = () => {
 
         <div className='col-sm-6'>
             <label htmlFor="info" className='me-2 d-block'>Civilité*</label>
-            <select id="info" className='MyForm-select rounded-0 py-3 mb-4' {...register("sexe", { required: true })}>
+            <select id="info" className='MyForm-select form-select py-3 mb-4' {...register("sexe", { required: true })}>
               <option value="Homme" defaultValue>M.</option>
               <option value="Femme">Mme</option>
             </select>
@@ -66,28 +66,28 @@ const SignUp = () => {
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="nom">Nom*</label>
-            <input className='MyForm-input py-3 mb-4' id='nom' type="text" maxLength={30} {...register("lastName", { required: true, maxLength: 30 })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='nom' type="text" maxLength={30} {...register("lastName", { required: true, maxLength: 30 })} />
             {errors.lastName?.type === 'required' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
             {errors.lastName?.type === 'maxLength' && <p role="alert" className='text-danger' style={{marginTop: "-22px"}}>Ce champ doit avoir maximum 30 caractères</p>}
           </div>
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="prenom">Prénom*</label>
-            <input className='MyForm-input py-3 mb-4' id='prenom' type="text" {...register("firstName", { required: true, maxLength: 20 })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='prenom' type="text" {...register("firstName", { required: true, maxLength: 20 })} />
             {errors.firstName?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
             {errors.firstName?.type === 'maxLength' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ doit avoir maximum 20 caractères</p>}
           </div>
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="email">Email*</label>
-            <input className='MyForm-input py-3 mb-4' id='email' type="email"  {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='email' type="email"  {...register("email", { required: true, pattern: /^\S+@\S+$/i })} />
             {errors.email?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
             {errors.email?.type === 'pattern' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Email invalide</p>}
           </div>
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="mdp">Mot de passe*</label>
-            <input className='MyForm-input py-3 mb-4' id='mdp' type="password" {...register("password", { required: true, min: 8, maxLength: 16, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/ })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='mdp' type="password" {...register("password", { required: true, min: 8, maxLength: 16, pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/ })} />
             <p>Votre mot de passe doit contenir :</p>
             <ul className='SignUp-form-mdp-ul'>
               <li className='SignUp-form-mdp-li'>Entre 8 et 16 caractères</li>
@@ -103,7 +103,7 @@ const SignUp = () => {
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="telephone">Téléphone*</label>
-            <input className='MyForm-input py-3 mb-4' id='telephone' type="tel" {...register("phone", { required: true, maxLength: 12, pattern: /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/i })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='telephone' type="tel" {...register("phone", { required: true, maxLength: 12, pattern: /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/i })} />
             {errors.phone?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
             {errors.phone?.type === 'pattern' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Numéro de téléphone invalide</p>}
             {errors.phone?.type === 'maxLength' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Le numéro de télophone ne doit pas avoir plus de 12 caractères</p>}
@@ -111,7 +111,7 @@ const SignUp = () => {
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="dateDeNaissance">Date de naissance*</label>
-            <input className='MyForm-input py-3 mb-4' id='dateDeNaissance' type="date" {...register("dateOfBirth", {
+            <input className='MyForm-input form-control py-3 mb-4' id='dateDeNaissance' type="date" {...register("dateOfBirth", {
               required: true,
               validate: (value) => {
                 const dateOfBirth = new Date(value);
@@ -130,28 +130,28 @@ const SignUp = () => {
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="nomDeRue">Numéro et nom de rue*</label>
-            <input className='MyForm-input py-3 mb-4' id='nomDeRue' type="text" {...register("streetNumberAndName", { required: true, pattern: /^[0-9]+(?: ?[A-Za-zéèêëîïôöùûüÇçÀàÂâÊêÎîÔôÛûÜü]+)+$/})} />
+            <input className='MyForm-input form-control py-3 mb-4' id='nomDeRue' type="text" {...register("streetNumberAndName", { required: true, pattern: /^[0-9]+(?: ?[A-Za-zéèêëîïôöùûüÇçÀàÂâÊêÎîÔôÛûÜü]+)+$/})} />
             {errors.streetNumberAndName?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champs est obligatoire</p>}
             {errors.streetNumberAndName?.type === 'pattern' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Numéro et nom de rue invalide</p>}
           </div>
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="codePostal">Code postal*</label>
-            <input className='MyForm-input py-3 mb-4' id='codePostal' type="text" {...register("addressPostalCode", { required: true, pattern: /^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/i })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='codePostal' type="text" {...register("addressPostalCode", { required: true, pattern: /^(F-)?((2[A|B])|[0-9]{2})[0-9]{3}$/i })} />
             {errors.addressPostalCode?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champs est obligatoire</p>}
             {errors.addressPostalCode?.type === 'pattern' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Le code postal est invalide</p>}
           </div>
 
           <div className='col-sm-6'>
             <label className='d-block' htmlFor="ville">Ville*</label>
-            <input className='MyForm-input py-3 mb-4' id='ville' type="text" {...register("addressCity", { required: true })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='ville' type="text" {...register("addressCity", { required: true })} />
             {errors.Ville?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champs est obligatoire</p>}
           </div>
 
           <div className='col-sm-6'>
             <label htmlFor="country" className='d-block me-2'>Pays*</label>
-            <select id="country" className='py-3 MyForm-select rounded-0 mb-4' {...register("addressCountry", { required: true })}>
-              <option value="">Sélectionnez un pays</option>
+            <select id="country" className='py-3 MyForm-select form-select mb-4' {...register("addressCountry", { required: true })}>
+              <option defaultValue>Sélectionnez un pays</option>
               <option value="France">France</option>
               <option value="Belgique">Belgique</option>
               <option value="Canada">Canada</option>

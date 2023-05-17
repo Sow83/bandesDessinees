@@ -71,13 +71,13 @@ const SignIn = ({cartItems}) => {
 
           <div className='col-12 offset-lg-4 col-lg-4 offset-lg-4'>
             <label className='d-block' htmlFor="email">Email*</label>
-            <input className='MyForm-input py-3 mb-4' id='email' type="email"  {...register("email", { required: true })} />
+            <input className='MyForm-input form-control py-3 mb-4' id='email' type="email"  {...register("email", { required: true })} />
             {errors.email?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
           </div>
 
           <div className='col-12 offset-lg-4 col-lg-4 offset-lg-4'>
             <label className='d-block' htmlFor="mdp">Mot de passe*</label>
-            <input className='MyForm-input py-3 mb-4' id='mdp' type="password" {...register("password", { required: true })} />   
+            <input className='MyForm-input form-control py-3 mb-4' id='mdp' type="password" {...register("password", { required: true })} />   
             {errors.password?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}        
           </div>
        

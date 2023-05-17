@@ -81,11 +81,11 @@ const BookDetails = ({AddItemToCart}) => {
         <div className='row row-cols-1 row-cols-md-2'>
           <div>
             <h3 className='mb-3 booksdetails-underline'>Résumé</h3>
-            <p>{details.summary}</p>
+            <p className='booksdetails-text'>{details.summary}</p>
           </div>
           <div>
             <h3 className='mb-3 booksdetails-underline'>Informations additionnelles</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate sit nisi quam veniam tempore perspiciatis, adipisci voluptas quod nobis repellendus iusto. Sed iusto impedit suscipit natus ea at ratione exercitationem.</p>
+            <p className='booksdetails-text'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate sit nisi quam veniam tempore perspiciatis, adipisci voluptas quod nobis repellendus iusto. Sed iusto impedit suscipit natus ea at ratione exercitationem.</p>
           </div>
         </div>
       </div>           

@@ -15,8 +15,11 @@
 .booksdetails-underline{
   border-bottom: 2px solid #efdcc7;
   padding-bottom: 1px;
-  width: 366px;
+  width: 89%;
   position: relative;
+}
+.booksdetails-text{
+  padding-right: 3.5rem;
 }
 .booksdetails-underline:after{
   content: "";
@@ -26,5 +29,6 @@
   bottom: -4px;
   width: 40px; 
   height: 6px; 
+  padding-right: 3rem;
 }
 

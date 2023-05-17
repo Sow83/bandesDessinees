@@ -1,33 +1,45 @@
 
-.myAccounts{
+.orders{
+  min-height: 45vh;
+}
+.orders-container{
   background-color: #fbf2e6;
   padding: 9px 0;
 }
-.myAccounts-table{
+.orders-item{
   background-color: white;
 }
-.myAccounts .myAccounts-thead{
+.orders .orders-thead{
   background-color: #f5dec1;
   height: 57px;
   vertical-align: middle;
 }
-/* .myAccounts-button-delete{
+/* .orders-button-delete{
   width: 25px;
   height: 25px;
   cursor: pointer;
   filter: invert(44%) sepia(24%) saturate(1388%) hue-rotate(324deg) brightness(91%) contrast(92%);
 } */
-.myAccounts-img-bd{
+.orders-img-bd{
   background-color: #fbf2e6;
   width: 100px;
 }
-.myAccounts-order-price{
-  background-color: white;
+
+.orders-price{
+  margin-right: 37px;
 }
-.myAccounts-total{
+.orders-total{
   color: #c35941;
 }
-.myAccounts-empty-cart{
-  min-height: 45vh;
+
+/* Accordeon */
+.accordion__heading .accordion__button:before {  
+  transform: rotate(-135deg);
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+}
+.accordion__button {
+ position: relative;
 }
 

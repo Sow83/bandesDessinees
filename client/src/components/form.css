@@ -1,3 +1,4 @@
+/* Tous les formulaires */
 .MyForm-container{
   background-color:#fbf2e6;
 }
@@ -13,16 +14,13 @@
 .MyForm{
   background-color:white;
 }
-.MyForm-input{
+.MyForm-input, .MyForm-select {
   width: 100%;
   border: 1px solid rgb(224, 223, 223);
   background-color: #faf7f6;
 }
 .MyForm-select{
-  border: 1px solid rgb(224, 223, 223);
-  background: #faf7f6;
-  width: 100%;
-  appearance: auto;
+  /* appearance: auto;  */
 }
 
 /* Formulaire d'inscription */
