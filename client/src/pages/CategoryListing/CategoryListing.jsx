@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
-import './Card.css'
-import ShowBooks from './ShowBooks';
+import ShowBooks from '../../components/showBooks/ShowBooks';
 
 
-const CategoryDetails = ({AddItemToCart}) => {
+const CategoryListing = ({ AddItemToCart }) => {
   const [books, setBooks] = useState([]);
   let { id } = useParams();
-  
-  
+
+
   useEffect(() => {
     const source = axios.CancelToken.source(); // Crée une instance de AbortController
     const getBooks = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/genres/${id}`, {
+        const response = await axios.get(`http://localhost:8000/categories/${id}`, {
           cancelToken: source.token // Ajoute le token de cancelation à la requête
         });
         setBooks(response.data);
@@ -31,24 +30,19 @@ const CategoryDetails = ({AddItemToCart}) => {
       source.cancel('Request canceled by cleanup'); // Annule la requête lorsque le composant est démonté
     };
   }, [id]);
- 
+
 
   const path = window.location.pathname
-  const title =  path.split('/')[2]
-  // let { state } = useLocation();
-  // console.log(state)
-  // let title
-  // if (state) {
-  //   title = state.titleForGenres 
-  // }
+  const title = path.split('/')[2]
+
   // console.log(title)
   return (
     <section>
-      <Link to={'/'} className="container d-block mt-3 text-decoration-none text-dark fs-5 fw-semibold fst-italic">Retour</Link>  
+      <Link to={'/'} className="container d-block mt-3 text-decoration-none text-dark fs-5 fw-semibold fst-italic">Retour</Link>
       <h2 className='text-center pt-5'>{title}</h2>
-      <ShowBooks books={books} AddItemToCart={AddItemToCart}/>
+      <ShowBooks books={books} AddItemToCart={AddItemToCart} />
     </section>
   );
 }
 
-export default CategoryDetails;
+export default CategoryListing;

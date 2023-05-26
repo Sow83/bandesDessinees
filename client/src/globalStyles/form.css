@@ -1,4 +1,4 @@
-/* Tous les formulaires */
+/* Page signIn et signUp */
 .MyForm-container{
   background-color:#fbf2e6;
 }
@@ -19,11 +19,9 @@
   border: 1px solid rgb(224, 223, 223);
   background-color: #faf7f6;
 }
-.MyForm-select{
-  /* appearance: auto;  */
-}
 
-/* Formulaire d'inscription */
+
+/* page signIn*/
 @media screen and (min-width: 1200px){
   .SignUp-form-mdp-ul{
     display: flex;

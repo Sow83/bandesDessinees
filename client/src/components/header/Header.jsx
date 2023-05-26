@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
-import { AuthContext } from '../utils/AuthContext'
+import { AuthContext } from '../../utils/AuthContext'
 import { useContext } from 'react'
 import './Header.css'
 

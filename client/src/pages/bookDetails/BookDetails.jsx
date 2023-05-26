@@ -72,7 +72,7 @@ const BookDetails = ({AddItemToCart}) => {
               <button type='button' className='btn bookDetails-btn fw-semibold'>Acheter</button>
             </div>
             <p><span className='fw-semibold'>Auteur: </span>{details.authorsName}</p>
-            <p><span className='fw-semibold'>Genre: </span>{details.genresName}</p>
+            <p><span className='fw-semibold'>Genre: </span>{details.categoryName}</p>
             <p><span className='fw-semibold'>Référence: </span>{details.reference}</p>
             <p><span className='fw-semibold'>Date de sortie: </span>{frenchDate}</p>
           </div>

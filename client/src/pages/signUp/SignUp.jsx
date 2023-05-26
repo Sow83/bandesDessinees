@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
-import "./form.css"
+
+
+
 
 const SignUp = () => {
   const [errorDuplicateEmail, setErrorDuplicateEmail] = useState('')

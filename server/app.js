@@ -82,35 +82,35 @@ mysql.createConnection(config)
   
   
 
-  // Recupération des genres des bandes dessinées
-  app.get('/genres', async(req, res) => {
+  // Recupération des categories des bandes dessinées
+  app.get('/categories', async(req, res) => {
     try {
-      const rows = await connection.query('SELECT * FROM genres')   
+      const rows = await connection.query('SELECT * FROM categories')   
       res.status(200).send(rows) 
     } catch (error) {
       res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des données." });
     }
   })
 
-   // Recupération des bandes dessinées selon leur genre
-   app.get('/genres/:id', async(req, res) => {
+   // Recupération des bandes dessinées selon leur cetegorie
+   app.get('/categories/:id', async(req, res) => {
     try {
       const {id} = req.params
-      const rows = await connection.query('SELECT * FROM books WHERE id_genres =?', [id])
+      const rows = await connection.query('SELECT * FROM books WHERE id_categories =?', [id])
       res.status(200).send(rows) 
     } catch (error) {
       res.status(500).json({ error: "Une erreur s'est produite lors de la récupération des données." });
     }      
  })
 
-  //  Recupération des détails de chaque bande dessinée sur les 3 tables( books, auteurs et genres)
+  //  Recupération des détails de chaque bande dessinée sur les 3 tables( books, auteurs et categories)
   app.get('/bookDetails/:id', async (req, res) => {
     try {
       const { id } = req.params;
       const rows = await connection.query(`
-        SELECT books.id, reference, title, summary, price, releaseDate, genres.genresName, authors.authorsName
+        SELECT books.id, reference, title, summary, price, releaseDate, categories.categoryName, authors.authorsName
         FROM books
-        LEFT JOIN genres ON books.id_genres = genres.id
+        LEFT JOIN categories ON books.id_categories = categories.id
         LEFT JOIN authors ON books.id_authors = authors.id
         WHERE books.id = ?
       `, [id]); 

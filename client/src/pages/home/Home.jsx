@@ -1,20 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import Categories from '../../components/Categories'
-import ShowBooks from '../../components/ShowBooks';
-import '../../components/Card.css';
+import Categories from '../../components/categories/Categories'
+import ShowBooks from '../../components/showBooks/ShowBooks';
 import './Home.css';
 
 const Home = ({ AddItemToCart }) => {
   const [books, setBooks] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState('');
 
-  // Recupère les différentes catégories(genres) de bandes dessinées 
-  const getGenres = async () => {
+  // Recupère les différentes catégories de bandes dessinées 
+  const getCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/genres');
-      setGenres(response.data);
+      const response = await axios.get('http://localhost:8000/categories');
+      setCategories(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -35,7 +34,7 @@ const Home = ({ AddItemToCart }) => {
 
 
   useEffect(() => {
-    getGenres()
+    getCategories()
     getBooks()
   }, [getBooks]);
 
@@ -47,7 +46,7 @@ const Home = ({ AddItemToCart }) => {
     <div className="container-fluid home">
       <div className="container">
         <h1 className='text-center mb-3'>Catégories Bandes Dessinées</h1>
-        <Categories genres={genres} />
+        <Categories categories={categories} />
         <form
           className="home-form col-12 col-sm-6 col-lg-3 ms-auto mb-5 "
           action=""

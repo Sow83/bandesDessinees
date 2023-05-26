@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../../utils/AuthContext'
-import UserAccountInformation from '../../components/userAccountInformation'
-import Orders from '../../components/Orders'
+import UserAccountInformation from '../../components/userAccountInformation/UserAccountInformation'
+import Orders from '../../components/orders/Orders'
 
 
 

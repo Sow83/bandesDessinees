@@ -2,19 +2,21 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { UseScrollToTop } from './utils/useScrollToTop'
-import Header from './components/Header'
+import Header from './components/header/Header'
 import Home from './pages/home/Home'
-import Footer from './components/Footer'
-import CategoryDetails from './components/CategoryDetails'
+import Footer from './components/footer/Footer'
+import CategoryListing from './pages/CategoryListing/CategoryListing'
 import BookDetails from './pages/bookDetails/BookDetails'
 import Basket from './pages/basket/Basket'
-import SignUp from './components/SignUp'
-import SignIn from './components/SignIn'
-import Payment from './components/Payment'
+import SignUp from './pages/signUp/SignUp'
+import SignIn from './pages/signIn/SignIn'
+import Payment from './pages/payment/Payment'
 import UserAccount from './pages/userAccount/UserAccount'
 import { AuthProvider } from './utils/AuthContext'
-import './components/Btn.css'
-import './components/reset.css'
+import './globalStyles/form.css'
+import './globalStyles/Card.css'
+import './globalStyles/Btn.css'
+import './globalStyles/reset.css'
 
 
 function App() {
@@ -80,7 +82,7 @@ function App() {
             <UseScrollToTop />
             <Routes>
               <Route path='/' element={<Home AddItemToCart={AddItemToCart} />} />
-              <Route path='/genres/:id/:id' element={<CategoryDetails AddItemToCart={AddItemToCart} />} />
+              <Route path='/categories/:id/:id' element={<CategoryListing AddItemToCart={AddItemToCart} />} />
               <Route path='/details/:id' element={<BookDetails AddItemToCart={AddItemToCart} />} />
               <Route path='/basket' element={<Basket cartItems={cartItems} setCartItems={setCartItems} AddItemToCart={AddItemToCart} decrementCartItem={decrementCartItem} deleteItemFromCart={deleteItemFromCart} itemsPrice={itemsPrice} shippingPrice={shippingPrice} totalPrice={totalPrice} />} />
               <Route path='/signUp' element={<SignUp />} />
