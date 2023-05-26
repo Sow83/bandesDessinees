@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios'
-import './Genres.css'
 import './Card.css'
 import ShowBooks from './ShowBooks';
 
 
-const Genres = ({AddItemToCart}) => {
+const CategoryDetails = ({AddItemToCart}) => {
   const [books, setBooks] = useState([]);
   let { id } = useParams();
   
@@ -52,4 +51,4 @@ const Genres = ({AddItemToCart}) => {
   );
 }
 
-export default Genres;
+export default CategoryDetails;

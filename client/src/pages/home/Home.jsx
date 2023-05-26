@@ -1,22 +1,22 @@
-import {useState, useEffect, useCallback} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import Categories from './Categories'
-import ShowBooks from './ShowBooks';
-import './Card.css';
+import Categories from '../../components/Categories'
+import ShowBooks from '../../components/ShowBooks';
+import '../../components/Card.css';
 import './Home.css';
 
-const Home = ({AddItemToCart}) => {
-  const [books, setBooks] = useState ([]);
-  const [genres, setGenres] = useState ([]);
+const Home = ({ AddItemToCart }) => {
+  const [books, setBooks] = useState([]);
+  const [genres, setGenres] = useState([]);
   const [sortBy, setSortBy] = useState('');
 
   // Recupère les différentes catégories(genres) de bandes dessinées 
   const getGenres = async () => {
     try {
-      const response = await axios.get ('http://localhost:8000/genres');
-      setGenres (response.data);
+      const response = await axios.get('http://localhost:8000/genres');
+      setGenres(response.data);
     } catch (error) {
-      console.error (error);
+      console.error(error);
     }
   };
 
@@ -32,9 +32,9 @@ const Home = ({AddItemToCart}) => {
       console.error(error);
     }
   }, [sortBy]);
-  
 
-  useEffect (() => {
+
+  useEffect(() => {
     getGenres()
     getBooks()
   }, [getBooks]);

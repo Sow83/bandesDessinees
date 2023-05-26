@@ -1,23 +1,23 @@
-import { useState, useEffect, useContext} from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
-import { AuthContext } from '../AuthContext'
-import UserAccountInformation from './userAccountInformation'
-import Orders from './Orders'
+import { AuthContext } from '../../utils/AuthContext'
+import UserAccountInformation from '../../components/userAccountInformation'
+import Orders from '../../components/Orders'
 
 
 
 
-const MyAccounts = () => {
+const UserAccount = () => {
   const [alert, setAlert] = useState("");
   const [showAlert, setShowAlert] = useState(false)
   const [showOrders, setShowOrders] = useState(true);
   // const [showInfos, setShowInfos] = useState(false);
- 
+
   // const alert = useLocation()
-  let locationAlert  = useLocation();
-  let locationshowOrder  = useLocation();
-// console.log(locationAlert.state.alert)
-// console.log(locationshowOrder.state.showOrder)
+  let locationAlert = useLocation();
+  let locationshowOrder = useLocation();
+  // console.log(locationAlert.state.alert)
+  // console.log(locationshowOrder.state.showOrder)
   const navigate = useNavigate()
   const { isAuthenticated } = useContext(AuthContext)
 
@@ -25,7 +25,7 @@ const MyAccounts = () => {
   useEffect(() => {
     if (isAuthenticated === false) {
       navigate("/signIn")
-    } 
+    }
   }, [isAuthenticated, navigate])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const MyAccounts = () => {
     // locationshowOrder.state.showOrder sera "true" ou "false" 
     if (locationshowOrder.state && locationshowOrder.state.showOrder !== undefined) {
       const booleanState = locationshowOrder.state.showOrder
-      setShowOrders(booleanState)     
+      setShowOrders(booleanState)
       console.log(booleanState)
     }
 
@@ -47,22 +47,22 @@ const MyAccounts = () => {
   }, [locationAlert.state, locationshowOrder.state]);
 
   // Affiche le composant "UserAccountInformation"
-  const handleDisplayUserInfo = () =>{
+  const handleDisplayUserInfo = () => {
     setShowOrders(false)
   }
 
   // Affiche le composant "Orders"
-  const handleDisplayUserOrder = () =>{
+  const handleDisplayUserOrder = () => {
     setShowOrders(true)
   }
-  
- 
+
+
 
   return (
     <>
       {isAuthenticated &&
         <div className='container py-5 '>
-          {showAlert  &&
+          {showAlert &&
             <div className='col col-sm-10 col-lg-6 offset-lg-3'>
               <div className="alert alert-success alert-dismissible fade show text-center" role="alert">
                 <p>{alert}</p>
@@ -76,8 +76,8 @@ const MyAccounts = () => {
               <h1 className='h2 mt-4 text-secondary'>Mon compte</h1>
               <Link onClick={handleDisplayUserInfo} className='fw-semibold link-dark d-block mb-2'>Mes informations</Link>
               <Link onClick={handleDisplayUserOrder} className='fw-semibold link-dark d-block'>Mes commandes</Link>
-            </div> 
-            {showOrders ? <Orders /> : <UserAccountInformation /> }                
+            </div>
+            {showOrders ? <Orders /> : <UserAccountInformation />}
           </div>
 
         </div>
@@ -86,5 +86,5 @@ const MyAccounts = () => {
   )
 }
 
-export default MyAccounts;
+export default UserAccount;
 

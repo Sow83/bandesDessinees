@@ -1,15 +1,15 @@
 
-import { useState, useContext }  from 'react'
+import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import  { AuthContext } from '../AuthContext'
+import { AuthContext } from '../utils/AuthContext'
 import axios from 'axios'
 
 
-const SignIn = ({cartItems}) => {
- const [errorMessage, setErrorMessage] = useState("")
- const {login} = useContext(AuthContext)
- const navigate = useNavigate()
+const SignIn = ({ cartItems }) => {
+  const [errorMessage, setErrorMessage] = useState("")
+  const { login } = useContext(AuthContext)
+  const navigate = useNavigate()
 
 
   /*Hook "useForm" de la bibliothèque "react-hook-form:
@@ -28,36 +28,36 @@ const SignIn = ({cartItems}) => {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
       },
-      data: dataForm  
+      data: dataForm
     }
     try {
       const response = await axios(options)
       console.log(response.data.message)
       console.log(response.data.user)
       console.log(response.data.token)
- 
+
       const token = response.data.token
       if (token) {
         // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
+
         // stocker le token dans le localStorage
         localStorage.setItem('token', token)
         login()
         if (cartItems.length === 0) {
           navigate('/')
-          }
-          else{
+        }
+        else {
           navigate('/basket')
         }
       }
-     
+
 
     } catch (error) {
       console.log(error)
       console.log(error.response.data.message)
       setErrorMessage(error.response.data.message)
     }
-   
+
   }
 
   return (
@@ -72,17 +72,17 @@ const SignIn = ({cartItems}) => {
           <div className='col-12 offset-lg-4 col-lg-4 offset-lg-4'>
             <label className='d-block' htmlFor="email">Email*</label>
             <input className='MyForm-input form-control py-3 mb-4' id='email' type="email"  {...register("email", { required: true })} />
-            {errors.email?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}
+            {errors.email?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{ marginTop: "-22px" }}>Ce champ est obligatoire</p>}
           </div>
 
           <div className='col-12 offset-lg-4 col-lg-4 offset-lg-4'>
             <label className='d-block' htmlFor="mdp">Mot de passe*</label>
-            <input className='MyForm-input form-control py-3 mb-4' id='mdp' type="password" {...register("password", { required: true })} />   
-            {errors.password?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{marginTop: "-22px"}}>Ce champ est obligatoire</p>}        
+            <input className='MyForm-input form-control py-3 mb-4' id='mdp' type="password" {...register("password", { required: true })} />
+            {errors.password?.type === 'required' && <p role="alert" className='text-danger mb-2' style={{ marginTop: "-22px" }}>Ce champ est obligatoire</p>}
           </div>
-       
+
           <div className='offset-lg-4 col-lg-4 offset-lg-4 mb-3'>
-            <input className='d-block btn btn-outline fw-semibold' type="submit" value="Envoyer"/>
+            <input className='d-block btn btn-outline fw-semibold' type="submit" value="Envoyer" />
           </div>
           {errorMessage && <p className='offset-lg-4 col-lg-4 offset-lg-4 text-danger'>{errorMessage}</p>}
         </form>
