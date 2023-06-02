@@ -11,6 +11,7 @@ import Basket from './pages/basket/Basket'
 import SignUp from './pages/signUp/SignUp'
 import SignIn from './pages/signIn/SignIn'
 import Payment from './pages/payment/Payment'
+import SearchResults from './pages/SearchResults/SearchResults'
 import UserAccount from './pages/userAccount/UserAccount'
 import { AuthProvider } from './utils/AuthContext'
 import './globalStyles/form.css'
@@ -89,6 +90,7 @@ function App() {
               <Route path='/signIn' location={{ key: 'signIn' }} element={<SignIn cartItems={cartItems} />} />
               <Route path='/payment' element={<Payment cartItems={cartItems} setCartItems={setCartItems} setNumberOfCartItems={setNumberOfCartItems} totalPrice={totalPrice} itemsPrice={itemsPrice} shippingPrice={shippingPrice} />} />
               <Route path='/userAccount' element={<UserAccount />} />
+              <Route path='/searchResults' element={<SearchResults />} />
             </Routes>
           </MainLayout>
           <Footer />

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { AuthContext } from '../../utils/AuthContext'
 import { useContext } from 'react'
@@ -8,7 +8,9 @@ import './Header.css'
 
 const Header = ({ numberOfCartItems }) => {
   const [showMenu, setShowMenu] = useState(false)
+  const [searchValue, setSearchValue] = useState('');
   const { isAuthenticated, user, logout } = useContext(AuthContext)
+  const navigate = useNavigate()
   const menuRef = useRef()
 
   useEffect(() => {
@@ -20,6 +22,19 @@ const Header = ({ numberOfCartItems }) => {
       document.removeEventListener('click', handleDocumentClick);
     };
   }, []);
+
+  const handleSubmitSearch = (e) =>{
+    e.preventDefault()
+
+    // La valeur de recherche ne doit pas etre vide ou contenir uniquement des espaces
+    if (searchValue.trim() === "") {
+      return
+    }
+    else{
+      navigate('/searchResults', {state:{inputValue: searchValue}})
+      setSearchValue("")
+    }  
+  }
 
   const handleDocumentClick = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -55,38 +70,12 @@ const Header = ({ numberOfCartItems }) => {
 
   return (
     <header className='header'>
-      <nav className="navbar navbar-expand-lg py-5" style={{ padding: "0 0.75rem" }}>
+      <nav className="navbar navbar-expand-lg py-5 d-block" style={{ padding: "0 0.75rem" }}>
         <div className="header-logo-navbar">
-          <Link to={'/'} className="navbar-brand fw-bold">BandesDessinées</Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarText"
-            aria-controls="navbarText"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-          <div className="collapse navbar-collapse" id="navbarText">
-            <ul className="navbar-nav container-lg align-items-lg-center ms-xl-5">
-              <li className="nav-item">
-                <a className="nav-link text-dark" aria-current="page" href="##">
-                  Qui sommes-nous ?
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-dark" href="##">Nouveautés</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-dark" href="##">A paraître</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-dark" href="##">Auteurs</a>
-              </li>
-            </ul>
-          </div>
+          <Link to={'/'} className="navbar-brand fw-bold mb-3">BandesDessinées</Link>
+          <form className='header-form' onSubmit={handleSubmitSearch}>
+            <input value={searchValue} onChange={(e) => setSearchValue(e.target.value) } className='border-0 p-2 ps-3 rounded-pill header-input-search' type="search" placeholder='Rechercher un livre'/>
+          </form>
         </div>
       </nav>
       <div className='header-auth'>

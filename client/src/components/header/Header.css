@@ -31,6 +31,14 @@
   right: 25px;
   top: 23px;
 }
+.header-form{
+  flex-grow: 1;
+}
+.header-input-search{
+  width: 100%;
+  margin-top: 1rem;
+  outline: 0;
+}
 .header-auth{
   display: flex;
   /* align-items: center; */
@@ -67,6 +75,10 @@
   .header-logo-navbar{
     display: flex;
     align-items: center;
+  }
+  .header-input-search{
+    width:50%;
+    margin-top: -11px;
   }
   .header-auth{
       top: 56px;
