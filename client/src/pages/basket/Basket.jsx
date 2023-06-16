@@ -5,6 +5,8 @@ import { CartContext } from '../../utils/CartContext'
 import './Basket.css'
 
 const Basket = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const navigate = useNavigate()
   const { isAuthenticated, login } = useContext(AuthContext)
   const { value } = useContext(CartContext);
@@ -32,8 +34,9 @@ const Basket = () => {
   return (
     <>
       {cartItems.length === 0 ? <p className='container text-center fs-1 my-5 p-lg-5'>Votre panier est vide</p> :
-        (<div className='basket'>
+        (<section className='basket'>
           <div className="container">
+            <h1 className='text-center mb-3'>Panier</h1>
             <div className='table-responsive'>
               <table className="table table-responsive mb-0 basket-table">
                 <thead className='basket-thead'>
@@ -50,8 +53,8 @@ const Basket = () => {
                       return (
                         <tr key={item.id} className='align-middle'>
                           <td>
-                            <img className="basket-button-delete me-5" src="http://localhost:8000/images/buttonDelete.svg" alt="bouton supprimer article du panier" onClick={() => deleteItemFromCart(item)} />
-                            <img className="basket-img-bd p-3 me-5" src={`http://localhost:8000/images/cover/${item.reference}.jpg`} alt={item.title} />
+                            <img className="basket-button-delete me-5" src={`${apiUrl}/images/buttonDelete.svg`} alt="bouton supprimer article du panier" onClick={() => deleteItemFromCart(item)} />
+                            <img className="basket-img-bd p-3 me-5" src={`${apiUrl}/images/cover/${item.reference}.jpg`} alt={item.title} />
                             <span className='fw-bold'>{item.title}</span>
                           </td>
                           <td>{item.price}&euro;</td>
@@ -77,7 +80,7 @@ const Basket = () => {
               <button onClick={handleClick} type='button' className='btn btn-outline fw-bold float-end mt-5 me-5'>Commander</button>
             </div>
           </div>
-        </div>)
+        </section>)
       }
     </>
   )

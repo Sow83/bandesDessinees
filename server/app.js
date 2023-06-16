@@ -21,7 +21,7 @@ const config = {
   database :  process.env.DB,
   user     : process.env.DB_USER,
   password : process.env.DB_PASS,
-  port : 3306, //port mysql
+  port: process.env.DB_PORT, // Port MySQL
 }
 
 // Creation d'une pool de connexion

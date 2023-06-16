@@ -5,6 +5,8 @@ import { MemoryRouter } from 'react-router-dom'; // Permet de simuler le routage
 import Categories from './Categories';
 
 describe('Suite de tests du Composant Categories', () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const categories = [
     { id: 1, categoryName: 'Humour' },
     { id: 2, categoryName: 'Jeunesse' },
@@ -45,7 +47,7 @@ describe('Suite de tests du Composant Categories', () => {
 
     const imageElements = screen.getAllByRole('img');
     imageElements.forEach((image, index) => {
-      expect(image.getAttribute('src')).toBe(`http://localhost:8000/images/${categories[index].categoryName.split(' ').join('')}.png`)
+      expect(image.getAttribute('src')).toBe(`${apiUrl}/images/${categories[index].categoryName.split(' ').join('')}.png`)
     });
 
   })

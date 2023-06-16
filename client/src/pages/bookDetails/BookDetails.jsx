@@ -8,12 +8,14 @@ import { CartContext } from '../../utils/CartContext'
 
 
 const BookDetails = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const { id } = useParams();
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-  const {value} = useContext(CartContext);
-  const {AddItemToCart} = value
+  const { value } = useContext(CartContext);
+  const { AddItemToCart } = value
 
   const handleSelectChange = (event) => {
     setQuantity(parseInt(event.target.value));
@@ -24,7 +26,7 @@ const BookDetails = () => {
     setLoading(true)
     async function getBookDetails() {
       try {
-        const response = await axios.get(`http://localhost:8000/bookDetails/${id}`);
+        const response = await axios.get(`${apiUrl}/bookDetails/${id}`);
         // console.log(response.data);
         setDetails(response.data)
         setLoading(false)
@@ -37,7 +39,7 @@ const BookDetails = () => {
     return () => {
       // cleanup
     };
-  }, [id]);
+  }, [apiUrl, id]);
 
   const dateMySQL = moment(details.releaseDate);
   dateMySQL.locale('fr');
@@ -46,23 +48,23 @@ const BookDetails = () => {
   return (
     <>
       {loading ? <p className='container text-center'>Chargement...</p> :
-        (<div className='bookDetails'>
+        (<section className='bookDetails'>
           <div className='container'>
             <div className='row row-cols-1 row-cols-md-2 mb-4 '>
               <div className='col mb-5'>
                 <div className=''>
-                  <img src={`http://localhost:8000/images/cover/${details.reference}.jpg`} className='img-fluid m-auto d-block p-3 p-md-4 p-lg-5 bg-light' alt="" />
+                  <img src={`${apiUrl}/images/cover/${details.reference}.jpg`} className='img-fluid m-auto d-block p-3 p-md-4 p-lg-5 bg-light' alt="" />
                 </div>
               </div>
               <div className='col'>
                 <p className='mb-2 fs-1 fw-bold bookDetails-price'>{details.price} &euro;</p>
                 <p className='mb-2'>Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <h2 className='mb-2'>{details.title}</h2>
+                <h1 className='h2 mb-2'>{details.title}</h1>
                 <div className='mb-5'>
-                  <img className='card-star me-1' src="http://localhost:8000/images/star-fill.svg" alt="étoile" />
-                  <img className='card-star me-1' src="http://localhost:8000/images/star-fill.svg" alt="étoile" />
-                  <img className='card-star me-1' src="http://localhost:8000/images/star-fill.svg" alt="étoile" />
-                  <img className='card-star me-1' src="http://localhost:8000/images/star-fill.svg" alt="étoile" />
+                  <img className='card-star me-1' src={`${apiUrl}/images/star-fill.svg`} alt="étoile" />
+                  <img className='card-star me-1' src={`${apiUrl}/images/star-fill.svg`} alt="étoile" />
+                  <img className='card-star me-1' src={`${apiUrl}/images/star-fill.svg`} alt="étoile" />
+                  <img className='card-star me-1' src={`${apiUrl}/images/star-fill.svg`} alt="étoile" />
                 </div>
                 <div className='mb-4'>
                   <span className='me-1'>Quantité</span>
@@ -90,16 +92,16 @@ const BookDetails = () => {
             </div>
             <div className='row row-cols-1 row-cols-md-2'>
               <div>
-                <h3 className='mb-3 booksdetails-underline'>Résumé</h3>
+                <h2 className='h3 mb-3 booksdetails-underline'>Résumé</h2>
                 <p className='booksdetails-text'>{details.summary}</p>
               </div>
               <div>
-                <h3 className='mb-3 booksdetails-underline'>Informations additionnelles</h3>
+                <h2 className='h3 mb-3 booksdetails-underline'>Informations additionnelles</h2>
                 <p className='booksdetails-text'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cupiditate sit nisi quam veniam tempore perspiciatis, adipisci voluptas quod nobis repellendus iusto. Sed iusto impedit suscipit natus ea at ratione exercitationem.</p>
               </div>
             </div>
           </div>
-        </div>)
+        </section>)
       }
     </>
   );

@@ -5,6 +5,8 @@ import ShowBooks from '../../components/showBooks/ShowBooks';
 
 
 const CategoryListing = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [books, setBooks] = useState([]);
   let { id } = useParams();
 
@@ -13,7 +15,7 @@ const CategoryListing = () => {
     const source = axios.CancelToken.source(); // Crée une instance de AbortController
     const getBooks = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/categories/${id}`, {
+        const response = await axios.get(`${apiUrl}/categories/${id}`, {
           cancelToken: source.token // Ajoute le token de cancelation à la requête
         });
         setBooks(response.data);
@@ -29,7 +31,7 @@ const CategoryListing = () => {
     return () => {
       source.cancel('Request canceled by cleanup'); // Annule la requête lorsque le composant est démonté
     };
-  }, [id]);
+  }, [apiUrl, id]);
 
 
   const path = window.location.pathname

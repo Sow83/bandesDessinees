@@ -11,6 +11,8 @@ import {
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 const Orders = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [ordersHistory, setOrdersHistory] = useState([]);
   const [showOrderHistory, setShowOrderHistory] = useState(false);
   // const navigate = useNavigate()
@@ -20,7 +22,7 @@ const Orders = () => {
     const token = localStorage.getItem("token")
     const options = {
       method: "GET",
-      url: "http://localhost:8000/orders/history",
+      url: `${apiUrl}/orders/history`,
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json;charset=UTF-8'
@@ -38,15 +40,15 @@ const Orders = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [])
+  }, [apiUrl])
 
   useEffect(() => {
     fetchData()
   }, [fetchData])
 
   return (
-    <div className='orders col-12 col-lg-9'>
-      <h2 className='mb-5 mt-5 text-secondary'>Mes commandes</h2>
+    <section className='orders col-12 col-lg-9'>
+      <h1 className='h2 mb-5 mt-5 text-secondary'>Mes commandes</h1>
       {showOrderHistory ?
         (
           <div className='orders-container'>
@@ -56,7 +58,7 @@ const Orders = () => {
                   <AccordionItem key={orderHistory.orderNumber} uuid={orderHistory.orderNumber}>    {/* Le premier élément se déplie par defaut parce que la valeur de uuid du premier élément correspond à la valeur de "preExpanded" */}
                     <AccordionItemHeading>
                       <AccordionItemButton>
-                        <h3 className='fs-6 me-4'>Commande numéro: {orderHistory.orderNumber} du {new Date(orderHistory.orderDate).toLocaleDateString('fr-FR')} <span className='text-success'>En cours de traitement</span></h3>
+                        <h2 className='h3 fs-6 me-4'>Commande numéro: {orderHistory.orderNumber} du {new Date(orderHistory.orderDate).toLocaleDateString('fr-FR')} <span className='text-success'>En cours de traitement</span></h2>
 
                       </AccordionItemButton>
                     </AccordionItemHeading>
@@ -75,7 +77,7 @@ const Orders = () => {
                             {orderHistory.items.map((item, itemIndex) => (
                               <tr key={itemIndex} className='align-middle'>
                                 <td>
-                                  <img className="orders-img-bd p-3 me-5" src={`http://localhost:8000/images/cover/${item.reference}.jpg`} alt={item.title} />
+                                  <img className="orders-img-bd p-3 me-5" src={`${apiUrl}/images/cover/${item.reference}.jpg`} alt={item.title} />
                                   <span className='fw-semibold'>{item.title}</span>
                                 </td>
                                 <td>{item.price}&euro;</td>
@@ -117,7 +119,7 @@ const Orders = () => {
         </div>
         )
       }
-    </div>
+    </section>
   );
 }
 

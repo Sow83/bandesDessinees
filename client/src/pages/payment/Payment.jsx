@@ -19,6 +19,8 @@ const PaymentHeader = () => {
 }
 
 const Payment = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
   const navigate = useNavigate()
@@ -29,8 +31,8 @@ const Payment = () => {
   // window.onpopstate = () => {
   //   navigate("/");
   // }
-  const {value} = useContext(CartContext);
-  const {cartItems, setCartItems, setNumberOfCartItems, itemsPrice, shippingPrice, totalPrice} = value
+  const { value } = useContext(CartContext);
+  const { cartItems, setCartItems, setNumberOfCartItems, itemsPrice, shippingPrice, totalPrice } = value
   const { isAuthenticated, user } = useContext(AuthContext)
   let userId
   let userName
@@ -68,7 +70,7 @@ const Payment = () => {
 
 
     const options = {
-      url: "http://localhost:8000/orders",
+      url: `${apiUrl}/orders`,
       method: "POST",
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',

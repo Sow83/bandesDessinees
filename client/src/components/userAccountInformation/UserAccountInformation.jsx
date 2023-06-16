@@ -5,6 +5,8 @@ import axios from 'axios';
 
 
 const UserAccountInformation = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [userInfo, setUserInfo] = useState([]);
   const [getData, setGetData] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -21,7 +23,7 @@ const UserAccountInformation = () => {
     const token = localStorage.getItem('token')
     const options = {
       method: "PUT",
-      url: "http://localhost:8000/users/update",
+      url: `${apiUrl}/users/update`,
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json;charset=UTF-8'
@@ -49,7 +51,7 @@ const UserAccountInformation = () => {
     const token = localStorage.getItem('token')
     const options = {
       method: "GET",
-      url: "http://localhost:8000/users",
+      url: `${apiUrl}/users`,
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json;charset=UTF-8'
@@ -62,7 +64,7 @@ const UserAccountInformation = () => {
     } catch (error) {
       console.log(error)
     }
-  }, [])
+  }, [apiUrl])
 
   useEffect(() => {
     fetchData()
@@ -85,7 +87,7 @@ const UserAccountInformation = () => {
 
   }, [getData, setValue, userInfo]);
   return (
-    <div className='MyForm-container py-5  col-12 col-lg-9'>
+    <section className='MyForm-container py-5  col-12 col-lg-9'>
       <div className='container fw-semibold'>
         <div className='MyForm-title mb-0 py-3 text-center row'>
           <h1>Mes informations personnelles</h1>
@@ -221,7 +223,7 @@ const UserAccountInformation = () => {
           }
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

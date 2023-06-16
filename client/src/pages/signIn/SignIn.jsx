@@ -7,11 +7,13 @@ import axios from 'axios'
 import { CartContext } from '../../utils/CartContext'
 
 const SignIn = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [errorMessage, setErrorMessage] = useState("")
   const { login } = useContext(AuthContext)
 
-  const {value} = useContext(CartContext);
-  const {cartItems} = value
+  const { value } = useContext(CartContext);
+  const { cartItems } = value
 
   const navigate = useNavigate()
 
@@ -27,7 +29,7 @@ const SignIn = () => {
   }
   const fetchData = async (dataForm) => {
     const options = {
-      url: 'http://localhost:8000/login',
+      url: `${apiUrl}/login`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
@@ -65,7 +67,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className='MyForm-container py-5'>
+    <section className='MyForm-container py-5'>
       <div className='container fw-semibold'>
         <div className='MyForm-title mb-0 py-3 text-center row'>
           <h1>Connectez-vous</h1>
@@ -91,7 +93,7 @@ const SignIn = () => {
           {errorMessage && <p className='offset-lg-4 col-lg-4 offset-lg-4 text-danger'>{errorMessage}</p>}
         </form>
       </div>
-    </div>
+    </section>
 
   )
 }

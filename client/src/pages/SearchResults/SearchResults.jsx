@@ -4,6 +4,8 @@ import ShowBooks from '../../components/showBooks/ShowBooks';
 import axios from 'axios';
 
 const SearchResults = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [books, setBooks] = useState([]);
   const location = useLocation();
   const searchInputValue = location.state.inputValue;
@@ -11,7 +13,7 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/books");
+        const response = await axios.get(`${apiUrl}/books`);
         const booksData = response.data;
         const SearchBookResult = booksData.filter(book =>
           book.title.toLowerCase().includes(searchInputValue.toLowerCase())
@@ -22,7 +24,7 @@ const SearchResults = () => {
       }
     };
     fetchData();
-  }, [searchInputValue]);
+  }, [apiUrl, searchInputValue]);
 
   return (
     <div>

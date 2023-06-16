@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect, useRef, useContext  } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { AuthContext } from '../../utils/AuthContext'
 import { CartContext } from '../../utils/CartContext'
 import './Header.css'
@@ -7,11 +7,13 @@ import './Header.css'
 
 
 const Header = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [showMenu, setShowMenu] = useState(false)
   const [searchValue, setSearchValue] = useState('');
   const { isAuthenticated, user, logout } = useContext(AuthContext)
-  const {value} = useContext(CartContext)
-  const {numberOfCartItems} = value
+  const { value } = useContext(CartContext)
+  const { numberOfCartItems } = value
   const navigate = useNavigate()
   const menuRef = useRef()
 
@@ -78,7 +80,7 @@ const Header = () => {
           <form className='container' onSubmit={handleSubmitSearch}>
             <input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className='border-0 p-2 ps-3 header-input-search' type="search" placeholder='Rechercher un livre' />
             <button className='header-button-search ' type='submit' title='Chercher'>
-              <img className='header-icon-search' src="http://localhost:8000/images/icon-search.png" alt="" />
+              <img className='header-icon-search' src={`${apiUrl}/images/icon-search.png`} alt="" />
             </button>
           </form>
         </div>
@@ -89,7 +91,7 @@ const Header = () => {
           <div>
             <div onClick={toggleMenu} ref={menuRef} className='header-cursor-profile' data-testid='profile-1' >
               {user && <span className='header-profile-text' >Bonjour {firstNameLoggedUser()}</span>}
-              <img className='header-profile-img me-sm-5' src="http://localhost:8000/images/profile-connected.png" alt="profil" />
+              <img className='header-profile-img me-sm-5' src={`${apiUrl}/images/profile-connected.png`} alt="profil" />
             </div>
             {showMenu &&
               <div onClick={handleMenuClick} className='header-menu-profile p-4 text-center rounded-2' data-testid='menu-dropdown-1'>
@@ -105,7 +107,7 @@ const Header = () => {
           <div>
             <div onClick={toggleMenu} ref={menuRef} className='header-cursor-profile' data-testid='profile-2' >
               <span className='header-profile-text'>Bonjour, identifiez-vous</span>
-              <img className='header-profile-img me-sm-5' src="http://localhost:8000/images/profile.png" alt="profil" />
+              <img className='header-profile-img me-sm-5' src={`${apiUrl}/images/profile.png`} alt="profil" />
             </div>
             {showMenu &&
               <div onClick={handleMenuClick} className='header-menu-profile p-3 text-center rounded-2' data-testid='menu-dropdown-2'>
@@ -119,7 +121,7 @@ const Header = () => {
           </div>
         }
         <div className="header-bag">
-          <Link to="/basket" className="nav-link"><img src="http://localhost:8000/images/shopping-bag.png" alt="panier" />{numberOfCartItems > 0 ? (<button data-testid="cart-badge" className="badge header-badge btn btn-danger border-0">{numberOfCartItems}</button>) : " "}</Link>
+          <Link to="/basket" className="nav-link"><img src={`${apiUrl}/images/shopping-bag.png`} alt="panier" />{numberOfCartItems > 0 ? (<button data-testid="cart-badge" className="badge header-badge btn btn-danger border-0">{numberOfCartItems}</button>) : " "}</Link>
         </div>
       </div>
     </header>

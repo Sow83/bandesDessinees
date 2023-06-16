@@ -1,4 +1,8 @@
 import './App.css';
+import './globalStyles/form.css'
+import './globalStyles/Card.css'
+import './globalStyles/Btn.css'
+import './globalStyles/reset.css'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { UseScrollToTop } from './utils/useScrollToTop'
 import Header from './components/header/Header'
@@ -14,20 +18,18 @@ import SearchResults from './pages/SearchResults/SearchResults'
 import UserAccount from './pages/userAccount/UserAccount'
 import { AuthProvider } from './utils/AuthContext'
 import { CartProvider } from './utils/CartContext'
-import './globalStyles/form.css'
-import './globalStyles/Card.css'
-import './globalStyles/Btn.css'
-import './globalStyles/reset.css'
 import ErrorPage from './components/ErrorPage/ErrorPage'
 
 
 function App() {
+
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
         <CartProvider>
           <MainLayout >
+          <main>
             <UseScrollToTop />
             <Routes>
               <Route path='/' element={<Home />} />
@@ -41,6 +43,7 @@ function App() {
               <Route path='/searchResults' element={<SearchResults />} />
               <Route path='*' element={<ErrorPage />} />
             </Routes>
+          </main>
           </MainLayout>
           <Footer />
         </CartProvider>

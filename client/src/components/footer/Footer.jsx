@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './Footer.css'
 
 const Footer = () => {
+
     return (
         <footer className="footer">
             <nav className="footer__nav container" aria-label="navigation pieds de page">
@@ -14,7 +15,7 @@ const Footer = () => {
                         <li><a href="https://www.twitter.com/" target="_blank" className="footer__social-link" title="twitter" rel="noreferrer"><span className="fab fa-twitter" title="twitter"></span></a></li>
                     </ul>
                     <p>Nous acceptons ces cartes de paiement</p>
-                    <img src="http://localhost:8000/images/credit-card.png" alt="" />
+                    <img src="" alt="" />
                 </div>
 
                 <div className="footer__item">

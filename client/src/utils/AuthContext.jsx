@@ -15,13 +15,15 @@ export const AuthProvider = ({ children }) => {
 
   // Vérifie si l'utilisateur est connecté ou pas et met à jour isAuthenticated et userId en cas de connexion
   const login = async () => {
+    const apiUrl = process.env.REACT_APP_API_URL
+
     const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : ''
 
     try {
       // Sans cette condition, si le token est null, undefined ou une chaîne de caractères vide,
       // la requête vers le serveur serait effectuée sans un token valide
       if (token !== '') {
-        const response = await axios.get("http://localhost:8000/api/protected", {
+        const response = await axios.get(`${apiUrl}/api/protected`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

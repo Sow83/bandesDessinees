@@ -8,6 +8,8 @@ import { useState } from 'react'
 
 
 const SignUp = () => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   const [errorDuplicateEmail, setErrorDuplicateEmail] = useState('')
   const [errorServer, setErrorServer] = useState('')
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ const SignUp = () => {
   const fetchData = async (dataForm) => {
     // axios POST request
     const options = {
-      url: 'http://localhost:8000/signUp',
+      url: `${apiUrl}/signUp`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
@@ -49,7 +51,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className='MyForm-container py-5'>
+    <section className='MyForm-container py-5'>
       <div className='container fw-semibold'>
         <div className='MyForm-title mb-0 py-3 text-center row'>
           <h1>Créer un compte</h1>
@@ -175,7 +177,7 @@ const SignUp = () => {
           {errorServer && <p className='text-danger'>{`${errorServer}, revenez plus tard`}</p>}
         </form>
       </div>
-    </div>
+    </section>
 
   )
 }

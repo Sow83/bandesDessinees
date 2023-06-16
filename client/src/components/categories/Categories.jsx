@@ -4,6 +4,8 @@ import './Categories.css'
 
 
 const Categories = ({ categories }) => {
+  const apiUrl = process.env.REACT_APP_API_URL
+
   return (
     <div className="m-auto bg-white categories row row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-5">
       {categories.map((category, index) => {
@@ -19,7 +21,7 @@ const Categories = ({ categories }) => {
               <div className={CatClass}>
                 <img
                   className="categories-img d-block m-auto px-5 pt-5 pb-4 w-100 w-100"
-                  src={`http://localhost:8000/images/${category.categoryName.split(' ').join('')}.png`}
+                  src={`${apiUrl}/images/${category.categoryName.split(' ').join('')}.png`}
                   alt={category.categoryName}
                 />
                 <h2 className="text-center fw-bold pb-1">
