@@ -4,7 +4,7 @@ import Categories from '../../components/categories/Categories'
 import ShowBooks from '../../components/showBooks/ShowBooks';
 import './Home.css';
 
-const Home = ({ AddItemToCart }) => {
+const Home = () => {
   const [books, setBooks] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState('');
@@ -62,7 +62,7 @@ const Home = ({ AddItemToCart }) => {
             <option value="descending">Prix décroissant</option>
           </select>
         </form>
-        <ShowBooks books={books} home={true} AddItemToCart={AddItemToCart} />
+        <ShowBooks books={books} home={true} />
       </div>
     </div>
   );

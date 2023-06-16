@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { AuthContext } from '../../utils/AuthContext'
-
-
+import { CartContext } from '../../utils/CartContext'
 
 const PaymentHeader = () => {
   return (
@@ -19,11 +18,8 @@ const PaymentHeader = () => {
   );
 }
 
-const Payment = ({ cartItems, setCartItems, setNumberOfCartItems, itemsPrice, shippingPrice, totalPrice }) => {
-  // console.log(cartItems)
-  // console.log(itemsPrice)
-  // console.log(shippingPrice)
-  // console.log(totalPrice)
+const Payment = () => {
+
   const { register, handleSubmit, reset, formState: { errors } } = useForm()
   const navigate = useNavigate()
   // console.log(errors)
@@ -33,7 +29,8 @@ const Payment = ({ cartItems, setCartItems, setNumberOfCartItems, itemsPrice, sh
   // window.onpopstate = () => {
   //   navigate("/");
   // }
-
+  const {value} = useContext(CartContext);
+  const {cartItems, setCartItems, setNumberOfCartItems, itemsPrice, shippingPrice, totalPrice} = value
   const { isAuthenticated, user } = useContext(AuthContext)
   let userId
   let userName

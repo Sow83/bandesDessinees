@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../../utils/AuthContext'
+import { CartContext } from '../../utils/CartContext'
 import './Basket.css'
 
-
-
-const Basket = ({ cartItems, AddItemToCart, decrementCartItem, deleteItemFromCart, itemsPrice, shippingPrice, totalPrice }) => {
+const Basket = () => {
   const navigate = useNavigate()
   const { isAuthenticated, login } = useContext(AuthContext)
+  const { value } = useContext(CartContext);
+  const { cartItems, AddItemToCart, decrementCartItem, deleteItemFromCart, itemsPrice, shippingPrice, totalPrice } = value
 
   // Création d'une référence à la fonction login afin qu'elle ne soit pas incluse dans la dépendance de useEffect
   const loginRef = useRef(login);
@@ -17,8 +18,6 @@ const Basket = ({ cartItems, AddItemToCart, decrementCartItem, deleteItemFromCar
     loginRef.current();
   }, []);
 
-  // console.log(cartItems)
-  // console.log(isAuthenticated)
 
   const handleClick = () => {
     // Vérification si l'utilisateur est connecté avant qu'il accède à la page"Payment" 
@@ -28,29 +27,11 @@ const Basket = ({ cartItems, AddItemToCart, decrementCartItem, deleteItemFromCar
     else {
       navigate("/SignIn");
     }
-    // fetchAuthMiddleware()
   }
-  //  const fetchAuthMiddleware = async () =>{
-  //   const token = localStorage.getItem('token');
-
-  //   try {
-  //     const response = await axios.get("http://localhost:8000/api/protected", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }       
-  //     })
-  //     if (response.data.isAuthenticated) {
-  //         navigate("/payment", { state: {totalCommande: totalPrice.toFixed(2)} });
-  //     } 
-  //   } catch (error) {
-  //     navigate("/SignIn");
-  //     console.log(error);
-  //   }
-  // }
 
   return (
     <>
-      {cartItems.length === 0 ? <p className='text-center fs-1 m-5 basket-empty-cart'>Votre panier est vide</p> :
+      {cartItems.length === 0 ? <p className='container text-center fs-1 my-5 p-lg-5'>Votre panier est vide</p> :
         (<div className='basket'>
           <div className="container">
             <div className='table-responsive'>
@@ -78,7 +59,7 @@ const Basket = ({ cartItems, AddItemToCart, decrementCartItem, deleteItemFromCar
                             <div className='d-flex justify-content-between align-items-center' style={{ width: "130px" }}>
                               <button type='button' onClick={() => decrementCartItem(item)} className={"border-0"} style={{ width: "50px" }} disabled={item.quantity === 1 && "disabled"}>-</button>
                               <span className='px-1'>{item.quantity}</span>
-                              <button type='button' onClick={() => AddItemToCart(item)} className="border-0 " style={{ width: "50px" }}>+</button>
+                              <button type='button' onClick={() => AddItemToCart(item, 1)} className="border-0 " style={{ width: "50px" }}>+</button>
                             </div>
                           </td>
                           <td>{item.quantity * item.price.toFixed(2) /* le prix sera de deux chiffre après la virgule*/}&euro;</td>
@@ -93,7 +74,6 @@ const Basket = ({ cartItems, AddItemToCart, decrementCartItem, deleteItemFromCar
               <p className='ps-2'>Total des articles:<span className='float-end pe-5'>{itemsPrice}&#8364;</span></p>
               <p className='ps-2'>Frais de livraison:<span className='float-end pe-5'>{shippingPrice}&#8364;</span></p>
               <p className='ps-2 fs-2'>Total de la commande:<span className='float-end pe-5 basket-total'>{totalPrice.toFixed(2)}&#8364;</span></p>
-              {/* <Link to={'/payment'} state={{totalCommande: totalPrice.toFixed(2)}} onClick={handleClick} ><button type='button' className='btn btn-outline fw-bold float-end mt-5 me-5'>Commander</button></Link> */}
               <button onClick={handleClick} type='button' className='btn btn-outline fw-bold float-end mt-5 me-5'>Commander</button>
             </div>
           </div>

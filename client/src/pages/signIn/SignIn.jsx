@@ -4,13 +4,15 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../utils/AuthContext'
 import axios from 'axios'
+import { CartContext } from '../../utils/CartContext'
 
-
-
-
-const SignIn = ({ cartItems }) => {
+const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState("")
   const { login } = useContext(AuthContext)
+
+  const {value} = useContext(CartContext);
+  const {cartItems} = value
+
   const navigate = useNavigate()
 
 
@@ -34,9 +36,9 @@ const SignIn = ({ cartItems }) => {
     }
     try {
       const response = await axios(options)
-      console.log(response.data.message)
-      console.log(response.data.user)
-      console.log(response.data.token)
+      // console.log(response.data.message)
+      // console.log(response.data.user)
+      // console.log(response.data.token)
 
       const token = response.data.token
       if (token) {
@@ -69,7 +71,7 @@ const SignIn = ({ cartItems }) => {
           <h1>Connectez-vous</h1>
           <p>Nouveau client ? <Link to={'/signUp'} className='MyForm-subtitle text-decoration-none' >Créer un compte</Link></p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className='MyForm py-5 px-md-5 row'>
+        <form onSubmit={handleSubmit(onSubmit)} className='MyForm py-5 px-md-5 row' data-testid='form-signIn' >
 
           <div className='col-12 offset-lg-4 col-lg-4 offset-lg-4'>
             <label className='d-block' htmlFor="email">Email*</label>

@@ -7,13 +7,13 @@ const SearchResults = () => {
   const [books, setBooks] = useState([]);
   const location = useLocation();
   const searchInputValue = location.state.inputValue;
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8000/books");
         const booksData = response.data;
-        const SearchBookResult= booksData.filter(book =>
+        const SearchBookResult = booksData.filter(book =>
           book.title.toLowerCase().includes(searchInputValue.toLowerCase())
         );
         setBooks(SearchBookResult);
@@ -32,10 +32,10 @@ const SearchResults = () => {
           <ShowBooks books={books} />
         </>
       ) : (
-        <div className='d-flex flex-column justify-content-center align-items-center text-center' style={{minHeight: '50vh'}}>
+        <div className='d-flex flex-column justify-content-center align-items-center text-center' style={{ minHeight: '50vh' }}>
           <h2>Nous n'avons pas de résultat pour votre recherche...</h2>
           <p>Vérifiez l’orthographe des mots saisis</p>
-          <Link to= {'/'} className='text-danger'>Retour à la page d'accueil</Link>
+          <Link to={'/'} className='text-danger'>Retour à la page d'accueil</Link>
         </div>
       )}
     </div>

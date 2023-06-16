@@ -17,29 +17,29 @@ export const AuthProvider = ({ children }) => {
   const login = async () => {
     const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : ''
 
-   try {
-    // Sans cette condition, si le token est null, undefined ou une chaîne de caractères vide,
-    // la requête vers le serveur serait effectuée sans un token valide
-    if (token !== '') {
-      const response = await axios.get("http://localhost:8000/api/protected", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }       
-      })
-      // Si la réponse du serveur est "true" l'utilisateur est connecté
-      if (response.data.authenticated) {
-        setIsAuthenticated(true)
-        setUser(response.data.user)
-      } 
+    try {
+      // Sans cette condition, si le token est null, undefined ou une chaîne de caractères vide,
+      // la requête vers le serveur serait effectuée sans un token valide
+      if (token !== '') {
+        const response = await axios.get("http://localhost:8000/api/protected", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        // Si la réponse du serveur est "true" l'utilisateur est connecté
+        if (response.data.authenticated) {
+          setIsAuthenticated(true)
+          setUser(response.data.user)
+        }
+      }
+    } catch (error) {
+      console.log(error)
     }
-  } catch (error) {
-    console.log(error)
-  }
   }
 
   const logout = () => {
     localStorage.removeItem('token')
-    setIsAuthenticated(false) 
+    setIsAuthenticated(false)
     setUser(null)
     setIsLogouted(true)
   }
@@ -67,11 +67,11 @@ export const AuthProvider = ({ children }) => {
     return <p className='container text-center fs-4 mt-5'>Chargement...</p>;
   }
 
-  return ( 
+  return (
     /*L'enfant direct de ce Provider est {children}, qui représente tous les composants
      qui sont imbriqués directement dans le Provider(le fournisseur de contexte). 
      Ces composants ont maintenant 
-     accès aux valeurs de contexte fournies par le Provider.  */ 
+     accès aux valeurs de contexte fournies par le Provider.  */
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>

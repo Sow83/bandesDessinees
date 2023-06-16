@@ -30,9 +30,6 @@ const Orders = () => {
       const response = await axios(options)
       const ordersHistoryData = response.data.orders;
       if (ordersHistoryData.length !== 0) {
-        // console.log(ordersHistoryData)
-        // console.log(typeof(ordersHistoryData))
-
         setOrdersHistory(ordersHistoryData)
         setShowOrderHistory(true)
       } else {
@@ -44,83 +41,83 @@ const Orders = () => {
   }, [])
 
   useEffect(() => {
-      fetchData()
+    fetchData()
   }, [fetchData])
 
   return (
     <div className='orders col-12 col-lg-9'>
-    <h2 className='mb-5 mt-5 text-secondary'>Mes commandes</h2>
-    {showOrderHistory ?
-      (
-        <div className='orders-container'>
-          <div className="container">
-            <Accordion allowZeroExpanded preExpanded={ordersHistory.length > 0 ? [ordersHistory[0].orderNumber] : []}>    {/* "preExpanded" doit etre un tableau de chaine de carastères ou de nombres*/}
-                {ordersHistory.map((orderHistory) => (                                  
+      <h2 className='mb-5 mt-5 text-secondary'>Mes commandes</h2>
+      {showOrderHistory ?
+        (
+          <div className='orders-container'>
+            <div className="container">
+              <Accordion allowZeroExpanded preExpanded={ordersHistory.length > 0 ? [ordersHistory[0].orderNumber] : []}>    {/* "preExpanded" doit etre un tableau de chaine de carastères ou de nombres*/}
+                {ordersHistory.map((orderHistory) => (
                   <AccordionItem key={orderHistory.orderNumber} uuid={orderHistory.orderNumber}>    {/* Le premier élément se déplie par defaut parce que la valeur de uuid du premier élément correspond à la valeur de "preExpanded" */}
                     <AccordionItemHeading>
-                  <AccordionItemButton>
-                  <h3 className='fs-6 me-4'>Commande numéro: {orderHistory.orderNumber} du {new Date(orderHistory.orderDate).toLocaleDateString('fr-FR')} <span className='text-success'>En cours de traitement</span></h3>
+                      <AccordionItemButton>
+                        <h3 className='fs-6 me-4'>Commande numéro: {orderHistory.orderNumber} du {new Date(orderHistory.orderDate).toLocaleDateString('fr-FR')} <span className='text-success'>En cours de traitement</span></h3>
 
-                  </AccordionItemButton>
-                </AccordionItemHeading>                                                                                                
-                <AccordionItemPanel>
-                    <div className='table-responsive orders-item'>
-                      <table className="table table-responsive mb-0">
-                        <thead className='orders-thead'>
-                          <tr>
-                            <th scope="col">Produit</th>
-                            <th scope="col">Prix</th>
-                            <th scope="col">Quantité</th>
-                            <th scope="col">Total</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {orderHistory.items.map((item, itemIndex) => (
-                            <tr key={itemIndex} className='align-middle'>
-                              <td>
-                                <img className="orders-img-bd p-3 me-5" src={`http://localhost:8000/images/cover/${item.reference}.jpg`} alt={item.title} />
-                                <span className='fw-semibold'>{item.title}</span>
-                              </td>
-                              <td>{item.price}&euro;</td>
-                              <td>
-                                <div className='d-flex justify-content-between align-items-center' style={{ width: "130px" }}>
-                                  <span className='px-1'>{item.quantity}</span>
-                                </div>
-                              </td>
-                              <td>{item.quantity * item.price}&euro;</td>
+                      </AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel>
+                      <div className='table-responsive orders-item'>
+                        <table className="table table-responsive mb-0">
+                          <thead className='orders-thead'>
+                            <tr>
+                              <th scope="col">Produit</th>
+                              <th scope="col">Prix</th>
+                              <th scope="col">Quantité</th>
+                              <th scope="col">Total</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <div className='fw-semibold fs-6'>
-                        <p className='ps-2'>Total des articles : <span className='float-end orders-price'>{orderHistory.totalWithoutShipping}&#8364;</span></p>
-                        <p className='ps-2'>Frais de livraison : <span className='float-end orders-price'>{orderHistory.shippingCost}&#8364;</span></p>
-                        <p className='ps-2 fs-5'>Total de la commande : <span className='float-end orders-total orders-price'>{orderHistory.orderTotal}&#8364;</span></p>
+                          </thead>
+                          <tbody>
+                            {orderHistory.items.map((item, itemIndex) => (
+                              <tr key={itemIndex} className='align-middle'>
+                                <td>
+                                  <img className="orders-img-bd p-3 me-5" src={`http://localhost:8000/images/cover/${item.reference}.jpg`} alt={item.title} />
+                                  <span className='fw-semibold'>{item.title}</span>
+                                </td>
+                                <td>{item.price}&euro;</td>
+                                <td>
+                                  <div className='d-flex justify-content-between align-items-center' style={{ width: "130px" }}>
+                                    <span className='px-1'>{item.quantity}</span>
+                                  </div>
+                                </td>
+                                <td>{item.quantity * item.price}&euro;</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <div className='fw-semibold fs-6'>
+                          <p className='ps-2'>Total des articles : <span className='float-end orders-price'>{orderHistory.totalWithoutShipping}&#8364;</span></p>
+                          <p className='ps-2'>Frais de livraison : <span className='float-end orders-price'>{orderHistory.shippingCost}&#8364;</span></p>
+                          <p className='ps-2 fs-5'>Total de la commande : <span className='float-end orders-total orders-price'>{orderHistory.orderTotal}&#8364;</span></p>
+                        </div>
                       </div>
-                    </div>
                     </AccordionItemPanel>
                   </AccordionItem>
-                 
-                ))}
-            
-            </Accordion>
-          </div>
-        </div>
 
-      )
-      :
-      (<div>
-        <p className='fs-4 fw-semibold' >Vous n'avez pas de commandes</p>
-        <p className='fs-5'>La balle est dans votre camp !</p>
-        <p>Faites un petit tour dans notre boutique et laissez-vous tenter par nos articles...</p>
-        <p>Si vous avez besoin d'un renseignement à propos d'une commande plus ancienne, un conseiller client est à votre disposition au</p>
-        <p className='fs-2 mb-0'>0 969 323 515</p>
-        <p>7 jours sur 7, de 8h à 21h,</p>
-        <p>Service gratuit + prix appel</p>
-      </div>
-      )
-    }
-  </div>
+                ))}
+
+              </Accordion>
+            </div>
+          </div>
+
+        )
+        :
+        (<div>
+          <p className='fs-4 fw-semibold' >Vous n'avez pas de commandes</p>
+          <p className='fs-5'>La balle est dans votre camp !</p>
+          <p>Faites un petit tour dans notre boutique et laissez-vous tenter par nos articles...</p>
+          <p>Si vous avez besoin d'un renseignement à propos d'une commande plus ancienne, un conseiller client est à votre disposition au</p>
+          <p className='fs-2 mb-0'>0 969 323 515</p>
+          <p>7 jours sur 7, de 8h à 21h,</p>
+          <p>Service gratuit + prix appel</p>
+        </div>
+        )
+      }
+    </div>
   );
 }
 

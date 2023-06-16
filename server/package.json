@@ -1,7 +1,7 @@
 {
-  "name": "bandedessinees",
+  "name": "bande-dessinees",
   "version": "1.0.0",
-  "description": "Vente de bande dessinées",
+  "description": "E-commerce bandes dessinées",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

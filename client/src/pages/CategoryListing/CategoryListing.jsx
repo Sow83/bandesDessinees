@@ -4,7 +4,7 @@ import axios from 'axios'
 import ShowBooks from '../../components/showBooks/ShowBooks';
 
 
-const CategoryListing = ({ AddItemToCart }) => {
+const CategoryListing = () => {
   const [books, setBooks] = useState([]);
   let { id } = useParams();
 
@@ -40,7 +40,7 @@ const CategoryListing = ({ AddItemToCart }) => {
     <section>
       <Link to={'/'} className="container d-block mt-3 text-decoration-none text-dark fs-5 fw-semibold fst-italic">Retour</Link>
       <h2 className='text-center pt-5'>{title}</h2>
-      <ShowBooks books={books} AddItemToCart={AddItemToCart} />
+      <ShowBooks books={books} />
     </section>
   );
 }
