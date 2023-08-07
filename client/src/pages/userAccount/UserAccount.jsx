@@ -40,7 +40,7 @@ const UserAccount = () => {
     if (locationshowOrder.state && locationshowOrder.state.showOrder !== undefined) {
       const booleanState = locationshowOrder.state.showOrder
       setShowOrders(booleanState)
-      console.log(booleanState)
+      // console.log(booleanState)
     }
 
 

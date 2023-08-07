@@ -26,7 +26,7 @@ const BookDetails = () => {
     setLoading(true)
     async function getBookDetails() {
       try {
-        const response = await axios.get(`${apiUrl}/bookDetails/${id}`);
+        const response = await axios.get(`${apiUrl}/books/bookDetails/${id}`);
         // console.log(response.data);
         setDetails(response.data)
         setLoading(false)
@@ -36,9 +36,6 @@ const BookDetails = () => {
       }
     }
     getBookDetails()
-    return () => {
-      // cleanup
-    };
   }, [apiUrl, id]);
 
   const dateMySQL = moment(details.releaseDate);
@@ -81,7 +78,7 @@ const BookDetails = () => {
                     <option value="10">10</option>
                   </select>
                   <button type='button' className='btn me-4 fw-semibold' onClick={() => AddItemToCart(details, quantity)}>Ajouter</button>
-                  <button type='button' className='btn bookDetails-btn fw-semibold'>Acheter</button>
+                  {/* <button type='button' className='btn bookDetails-btn fw-semibold'>Acheter</button> */}
                 </div>
                 <p><span className='fw-semibold'>Auteur: </span>{details.authorsName}</p>
                 <p><span className='fw-semibold'>Genre: </span>{details.categoryName}</p>

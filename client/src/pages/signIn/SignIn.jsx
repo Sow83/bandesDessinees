@@ -29,7 +29,7 @@ const SignIn = () => {
   }
   const fetchData = async (dataForm) => {
     const options = {
-      url: `${apiUrl}/login`,
+      url: `${apiUrl}/auth/login`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'

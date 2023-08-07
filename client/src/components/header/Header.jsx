@@ -4,8 +4,6 @@ import { AuthContext } from '../../utils/AuthContext'
 import { CartContext } from '../../utils/CartContext'
 import './Header.css'
 
-
-
 const Header = () => {
   const apiUrl = process.env.REACT_APP_API_URL
 

@@ -60,7 +60,7 @@ const Payment = () => {
     fetchData()
     localStorage.removeItem('cartItems')
     localStorage.removeItem('numberOfCartItems')
-    setNumberOfCartItems("")
+    setNumberOfCartItems(0)
     setCartItems([])
     // console.log(data)
   };

@@ -65,7 +65,7 @@ const Basket = () => {
                               <button type='button' onClick={() => AddItemToCart(item, 1)} className="border-0 " style={{ width: "50px" }}>+</button>
                             </div>
                           </td>
-                          <td>{item.quantity * item.price.toFixed(2) /* le prix sera de deux chiffre après la virgule*/}&euro;</td>
+                          <td>{parseFloat(item.quantity * item.price).toFixed(2)}&euro;</td>
                         </tr>
                       )
                     })
@@ -74,9 +74,9 @@ const Basket = () => {
               </table>
             </div>
             <div className='basket-order-price pt-5 fw-semibold fs-4'>
-              <p className='ps-2'>Total des articles:<span className='float-end pe-5'>{itemsPrice}&#8364;</span></p>
+              <p className='ps-2'>Total des articles:<span className='float-end pe-5'>{parseFloat(itemsPrice).toFixed(2)}&#8364;</span></p>
               <p className='ps-2'>Frais de livraison:<span className='float-end pe-5'>{shippingPrice}&#8364;</span></p>
-              <p className='ps-2 fs-2'>Total de la commande:<span className='float-end pe-5 basket-total'>{totalPrice.toFixed(2)}&#8364;</span></p>
+              <p className='ps-2 fs-2'>Total de la commande:<span className='float-end pe-5 basket-total'>{parseFloat(totalPrice).toFixed(2)}&#8364;</span></p>
               <button onClick={handleClick} type='button' className='btn btn-outline fw-bold float-end mt-5 me-5'>Commander</button>
             </div>
           </div>

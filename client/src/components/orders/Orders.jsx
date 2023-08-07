@@ -15,8 +15,6 @@ const Orders = () => {
 
   const [ordersHistory, setOrdersHistory] = useState([]);
   const [showOrderHistory, setShowOrderHistory] = useState(false);
-  // const navigate = useNavigate()
-  // const { isAuthenticated } = useContext(AuthContext)
 
   const fetchData = useCallback(async () => {
     const token = localStorage.getItem("token")

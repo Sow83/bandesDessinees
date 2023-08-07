@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 
 
-
 const UserAccountInformation = () => {
   const apiUrl = process.env.REACT_APP_API_URL
 
@@ -14,7 +13,6 @@ const UserAccountInformation = () => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm()
   // const onSubmit = data => console.log(data);
   // console.log(errors);
-
 
   const hundleCloseAlert = () => {
     setAlert(false)
@@ -34,7 +32,6 @@ const UserAccountInformation = () => {
       await axios(options)
       setValue("password", "")
       setAlert(true)
-
       // setUserInfo(response.data.result)
       // setGetData(true)
     } catch (error) {

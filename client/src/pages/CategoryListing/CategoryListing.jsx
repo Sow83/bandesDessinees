@@ -21,7 +21,7 @@ const CategoryListing = () => {
         setBooks(response.data);
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('Request canceled');
+          // console.log('Request canceled');
         } else {
           console.error(error);
         }

@@ -1,12 +1,10 @@
 .card-container{
   background-color: #fbf2e6;
 }
-.card-container-img{
+.card-content{
   z-index: 1;
 }
-.card-container-img::after{
-  content: "";
-  background-image: url("http://localhost:8000/images/dotted.png");
+.card-container-img{
   position: absolute;
   z-index: -1;
   top: 71px;

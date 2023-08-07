@@ -24,7 +24,8 @@ const ShowBooks = ({ books, home }) => {
         return (
           <div className={`"col" ${books.length < 5 && "m-auto"}`} key={book.id}>
             <div className={`card h-100 border-0 card-container ${home !== true && "pt-4"}`}>
-              <div className='position-relative m-auto card-container-img'>
+              <div className='position-relative m-auto card-content '>
+                <img className='card-container-img' src={`${apiUrl}/images/dotted.png`} alt="" />
                 <Link to={`/details/${book.id}/${cleanedTitle}`}><img src={`${apiUrl}/images/cover/${book.reference}.jpg`} className="card-img-top card-img-bottom mb-4 card-img " alt="..." style={{ width: "188px", height: "277px" }} /></Link>
               </div>
               <div className="card-body text-center">

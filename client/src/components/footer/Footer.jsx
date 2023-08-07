@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import './Footer.css'
 
 const Footer = () => {
+    const apiUrl = process.env.REACT_APP_API_URL
 
     return (
         <footer className="footer">
@@ -15,7 +16,7 @@ const Footer = () => {
                         <li><a href="https://www.twitter.com/" target="_blank" className="footer__social-link" title="twitter" rel="noreferrer"><span className="fab fa-twitter" title="twitter"></span></a></li>
                     </ul>
                     <p>Nous acceptons ces cartes de paiement</p>
-                    <img src="" alt="" />
+                    <img src={`${apiUrl}/images/credit-card.png`} alt="carte de paiement" />
                 </div>
 
                 <div className="footer__item">

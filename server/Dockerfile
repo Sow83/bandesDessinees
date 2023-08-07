@@ -13,8 +13,8 @@ RUN npm install
 # Copie le reste du code de l'application dans le conteneur
 COPY ./ .
 
-# Expose le port 8000 pour le conteneur
-EXPOSE 8000
+# Expose le port 9000 pour le conteneur
+EXPOSE 9000
 
 # Définit un volume pour le répertoire /app/uploads dans le conteneur, qui sera utilisé pour stocker les fichiers uploadés par l'application.
 # VOLUME [ "/app/uploads" ]

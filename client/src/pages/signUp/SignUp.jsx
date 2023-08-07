@@ -25,7 +25,7 @@ const SignUp = () => {
   const fetchData = async (dataForm) => {
     // axios POST request
     const options = {
-      url: `${apiUrl}/signUp`,
+      url: `${apiUrl}/auth/signUp`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
@@ -35,7 +35,7 @@ const SignUp = () => {
     try {
       const response = await axios(options)
       console.log(response.status);
-      if (response.status === 200) {
+      if (response.status === 201) {
         navigate('/signIn')
       }
     } catch (error) {

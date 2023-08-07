@@ -19,11 +19,11 @@ export const AuthProvider = ({ children }) => {
 
     const token = localStorage.getItem('token') !== null ? localStorage.getItem('token') : ''
 
-    try {
+    // try {
       // Sans cette condition, si le token est null, undefined ou une chaîne de caractères vide,
       // la requête vers le serveur serait effectuée sans un token valide
       if (token !== '') {
-        const response = await axios.get(`${apiUrl}/api/protected`, {
+        const response = await axios.get(`${apiUrl}/auth/api/protected`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -33,10 +33,16 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true)
           setUser(response.data.user)
         }
+        else{
+          return
+        }
       }
-    } catch (error) {
-      console.log(error)
-    }
+      else{
+        return
+      }
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }
 
   const logout = () => {
@@ -72,8 +78,7 @@ export const AuthProvider = ({ children }) => {
   return (
     /*L'enfant direct de ce Provider est {children}, qui représente tous les composants
      qui sont imbriqués directement dans le Provider(le fournisseur de contexte). 
-     Ces composants ont maintenant 
-     accès aux valeurs de contexte fournies par le Provider.  */
+     Ces composants ont maintenant accès aux valeurs de contexte fournies par le Provider.  */
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>

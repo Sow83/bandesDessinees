@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Categories.css'
 
-
 const Categories = ({ categories }) => {
-  const apiUrl = process.env.REACT_APP_API_URL
+const apiUrl = process.env.REACT_APP_API_URL
 
   return (
     <div className="m-auto bg-white categories row row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-5">
